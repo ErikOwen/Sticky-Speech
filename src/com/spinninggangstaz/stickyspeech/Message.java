@@ -9,9 +9,13 @@ public class Message implements Serializable{
 	Date date;
     private static final long serialVersionUID = 7526471155622776147L;
 	
-	public Message(String text, Date date) {
+	public Message(String text) {//, Date date) {
 		this.text = text;
-		this.date = date;
+		//this.date = date;
+	}
+	
+	public String toString() {
+		return this.text;
 	}
 	
 	public void editText(String newText) {
