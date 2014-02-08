@@ -29,7 +29,7 @@ public class MessageDB {
         FileOutputStream fout = null;
         ObjectOutputStream out = null;
         try {
-            fout = new FileOutputStream("res" + System.getProperty("file.separator") + "memoData"
+            fout = new FileOutputStream("memoData"
                 + System.getProperty("file.separator") + "memoData.txt");
             out = new ObjectOutputStream(fout);
             out.writeObject(msgList);
@@ -48,8 +48,7 @@ public class MessageDB {
         FileInputStream fis = null;
         ArrayList<Message> list = null;
         try {
-            fis = StickySpeechApplication.getAppContext().getApplicationContext().openFileInput("res"
-                    + System.getProperty("file.separator") + "memoData"
+            fis = StickySpeechApplication.getAppContext().getApplicationContext().openFileInput("memoData"
                     + System.getProperty("file.separator") + "memoData.txt");
             in = new ObjectInputStream(fis);
             list = (ArrayList<Message>)in.readObject();
