@@ -7,13 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,10 +90,7 @@ public class TakeNote extends Activity {
             // Populate the wordsList with the String values the recognition engine thought it heard
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            String voiceInput = "";
-            for(String str : matches) {
-            	voiceInput = voiceInput.concat(str);
-            }
+            String voiceInput = matches.get(0);
             
             int cursorSpot = textField.getSelectionStart();
             String beforeCurs = this.textField.getText().toString().substring(0, cursorSpot);
@@ -103,6 +98,7 @@ public class TakeNote extends Activity {
             this.textField.setText(beforeCurs + voiceInput + afterCurs);
             this.textField.setSelection(cursorSpot);
         }
+        
         super.onActivityResult(requestCode, resultCode, data);
     }
 
