@@ -5,10 +5,8 @@ import android.content.Context;
 import java.io.*;
 import java.util.ArrayList;
 
-public class MessageDB{
-	
+public class MessageDB {
 	ArrayList<Message> msgList;
-
 
 	public MessageDB() {
 		msgList = new ArrayList<Message>();
@@ -26,7 +24,7 @@ public class MessageDB{
 		return this.msgList.toString();
 	}
 
-    public void saveMessages() throws IOException
+    public void saveMessages()
     {
         FileOutputStream fout = null;
         ObjectOutputStream out = null;
@@ -37,17 +35,14 @@ public class MessageDB{
             out.writeObject(msgList);
             out.flush();
             out.close();
+            fout.close();
         }
         catch (IOException ioe) {
             System.out.println("Error in save method");
         }
-        finally {
-            out.close();
-            fout.close();
-        }
     }
 
-    public void loadMessages() throws IOException
+    public void loadMessages()
     {
         ObjectInputStream in = null;
         FileInputStream fis = null;
@@ -58,16 +53,17 @@ public class MessageDB{
                     + System.getProperty("file.separator") + "memoData.txt");
             in = new ObjectInputStream(fis);
             list = (ArrayList<Message>)in.readObject();
+            in.close();
+            fis.close();
         }
         catch (Exception ex) {
             System.out.println("Error in get method");
         }
-        finally {
-            in.close();
-            fis.close();
-        }
         if(list != null) {
             msgList = list;
+        }
+        else {
+            msgList = new ArrayList<Message>();
         }
 
     }
