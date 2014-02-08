@@ -17,4 +17,9 @@ public class MessageDB {
 	public void deleteMessage(Message msg) {
 		msgList.remove(msg);
 	}
+	
+	public String toString() {
+		return this.msgList.toString();
+	}
+	
 }
