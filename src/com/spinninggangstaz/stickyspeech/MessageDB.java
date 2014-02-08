@@ -6,25 +6,21 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class MessageDB {
-	ArrayList<Message> msgList;
-
-	public MessageDB() {
-		msgList = new ArrayList<Message>();
-	}
+	static ArrayList<Message> msgList;
 	
-	public void addMessage(Message msg) {
+	public static void addMessage(Message msg) {
 		msgList.add(msg);
 	}
 	
-	public void deleteMessage(Message msg) {
+	public static void deleteMessage(Message msg) {
 		msgList.remove(msg);
 	}
 	
-	public String toString() {
-		return this.msgList.toString();
+	public static ArrayList<Message> getList() {
+		return msgList;
 	}
 
-    public void saveMessages()
+    public static void saveMessages()
     {
         FileOutputStream fout = null;
         ObjectOutputStream out = null;
@@ -42,7 +38,7 @@ public class MessageDB {
         }
     }
 
-    public void loadMessages()
+    public static void loadMessages()
     {
         ObjectInputStream in = null;
         FileInputStream fis = null;
