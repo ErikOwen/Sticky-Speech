@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +22,7 @@ import android.widget.ToggleButton;
 public class TakeNote extends Activity {
 	private RelativeLayout rootView;
 	private RelativeLayout microphoneView;
-	private TextView title;
+	private Button saveButton;
 	private EditText textField;
 	private ToggleButton microphone;
 	private boolean isRecording;
@@ -42,12 +44,12 @@ public class TakeNote extends Activity {
 		
 		this.rootView = (RelativeLayout)findViewById(R.id.takeNoteRootView);
 		this.microphoneView = (RelativeLayout)findViewById(R.id.microphoneLayout);
-		this.title = (TextView)findViewById(R.id.takeNoteTitle);
+		this.saveButton = (Button)findViewById(R.id.saveButton);
 		this.textField = (EditText)findViewById(R.id.noteTextBox);
 		this.microphone = (ToggleButton)findViewById(R.id.toggleMicrophone);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
-		this.title.setTypeface(font);
+		this.saveButton.setTypeface(font);
 	}
 	
 	private void initOnClickListeners() {
@@ -73,7 +75,7 @@ public class TakeNote extends Activity {
 			        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
 			        startActivityForResult(intent, REQUEST_CODE);
 			        
-			        Toast.makeText(getBaseContext(), "Should be recording", Toast.LENGTH_SHORT).show();
+			        //Toast.makeText(getBaseContext(), "Should be recording", Toast.LENGTH_SHORT).show();
 				//}
 			}
 		});
