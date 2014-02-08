@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="stickySpeech">Sticky Speech</string>
     <string name="noteHint">Enter your note here!</string>
+    <string name="editMessage">Edit your message</string>
 
 </resources>
