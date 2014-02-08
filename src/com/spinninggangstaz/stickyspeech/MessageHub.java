@@ -36,14 +36,5 @@ public class MessageHub extends ListActivity {
      protected void onListItemClick(ListView l, View v, int position, long id) {
 		 super.onListItemClick(l, v, position, id);
      }
-	
-
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.message_hub, menu);
-		return true;
-	}
 
 }
