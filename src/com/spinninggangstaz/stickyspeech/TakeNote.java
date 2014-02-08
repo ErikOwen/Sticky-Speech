@@ -1,5 +1,7 @@
 package com.spinninggangstaz.stickyspeech;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class TakeNote extends Activity {
@@ -33,6 +36,7 @@ public class TakeNote extends Activity {
 		this.isRecording = false;
 		
 		initLayout();
+		initOnClickListeners();
 	}
 	
 	private void initLayout() {
@@ -64,15 +68,42 @@ public class TakeNote extends Activity {
 		
 		this.microphone.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				if(!isRecording) {
+				//if(!isRecording) {
 			        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 			                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 			        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
 			        startActivityForResult(intent, REQUEST_CODE);
-				}
+			        
+			        Toast.makeText(getBaseContext(), "Should be recording", Toast.LENGTH_SHORT).show();
+				//}
 			}
 		});
 	}
+	
+    /**
+     * Handle the results from the voice recognition activity.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            // Populate the wordsList with the String values the recognition engine thought it heard
+            ArrayList<String> matches = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            String voiceInput = "";
+            for(String str : matches) {
+            	voiceInput = voiceInput.concat(str);
+            }
+            
+            int cursorSpot = textField.getSelectionStart();
+            String beforeCurs = this.textField.getText().toString().substring(0, cursorSpot);
+            String afterCurs = this.textField.getText().toString().substring(cursorSpot);
+            this.textField.setText(beforeCurs + voiceInput + afterCurs);
+            this.textField.setSelection(cursorSpot);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 }

@@ -47,8 +47,8 @@
         		android:background="@drawable/microphone_selector"
         		android:textOn=""
         		android:textOff=""
-        		android:focusable="false"
-        		android:focusableInTouchMode="false"
+        		
+        		
         		android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
