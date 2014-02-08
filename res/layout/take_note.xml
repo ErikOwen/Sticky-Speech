@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/takeNoteRootView"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,27 +24,32 @@
     	        android:gravity="center_horizontal"
     	        android:text="@string/stickySpeech"
     	        android:textColor="@color/white"
-    	        android:textSize="25sp"/>
+    	        android:textSize="35sp"/>
     	</RelativeLayout>
         <EditText 
             android:id="@+id/noteTextBox"
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:layout_weight=".8"
-            android:background="@color/yellow"/>
+            android:gravity="top"
+            android:background="@color/yellow"
+            android:hint="@string/noteHint" />
 		<RelativeLayout
             android:id="@+id/microphoneLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".1"
             android:background="@color/black">
-    	    <ImageButton 
-            	android:id="@+id/microphone"
-            	android:layout_width="50dp"
-            	android:layout_height="50dp"
-            	android:layout_centerInParent="true"
-            	android:scaleType="fitXY"
-           		android:src="@drawable/microphone_selector"/>
+    	    <ToggleButton 
+        		android:id="@+id/toggleMicrophone"
+        		android:layout_width="50dp"
+        		android:layout_height="50dp"
+        		android:background="@drawable/microphone_selector"
+        		android:textOn=""
+        		android:textOff=""
+        		android:focusable="false"
+        		android:focusableInTouchMode="false"
+        		android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
 
