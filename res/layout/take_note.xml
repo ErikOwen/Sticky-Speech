@@ -2,15 +2,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TakeNote" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    
+    <LinearLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:weightSum="1"
+    	>
+    	<RelativeLayout
+    	    android:id="@+id/titleLayout"
+    		android:layout_width="match_parent"
+    		android:layout_height="0dp"
+    		android:layout_weight=".1"
+    		android:background="@color/black">
+    	    <TextView 
+    	        android:id="@+id/takeNoteTitle"
+    	        android:layout_width="match_parent"
+    	        android:layout_height="wrap_content"
+    	        android:gravity="center_horizontal"
+    	        android:text="@string/stickySpeech"
+    	        android:textColor="@color/white"
+    	        android:textSize="25sp"/>
+    	</RelativeLayout>
+        <EditText 
+            android:id="@+id/noteTextBox"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight=".8"
+            android:background="@color/yellow"/>
+		<RelativeLayout
+            android:id="@+id/microphoneLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:background="@color/black">
+    	    <ImageButton 
+            	android:id="@+id/microphone"
+            	android:layout_width="50dp"
+            	android:layout_height="50dp"
+            	android:layout_centerInParent="true"
+            	android:scaleType="fitXY"
+           		android:src="@drawable/microphone_selector"/>
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
