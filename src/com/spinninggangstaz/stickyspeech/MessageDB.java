@@ -31,8 +31,6 @@ public class MessageDB {
         ObjectOutputStream out = null;
         try {
         	File file = new File("memoData/memoData.txt");
-        	boolean empty = file.length() == 0;
-        	if(!empty) {
         		fout = new FileOutputStream(file);
                     
         		out = new ObjectOutputStream(fout);
@@ -40,7 +38,6 @@ public class MessageDB {
         		out.flush();
         		out.close();
         		fout.close();
-        	}
         }
         catch (IOException ioe) {
             System.out.println("Error in save method");

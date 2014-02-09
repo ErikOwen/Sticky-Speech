@@ -76,11 +76,10 @@ public class TakeNote extends Activity {
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Message curMessage = new Message(textField.getText().toString());
-				MessageDB.loadMessages();
 				try
 				{
-				MessageDB.addMessage(curMessage);
-				MessageDB.saveMessages();
+					MessageDB.addMessage(curMessage);
+					MessageDB.saveMessages();
 				}
 				catch(Exception e) {
 					//Toast.makeText(getApplicationContext(), "Unable to load file due to IO exception", Toast.LENGTH_LONG).show();
