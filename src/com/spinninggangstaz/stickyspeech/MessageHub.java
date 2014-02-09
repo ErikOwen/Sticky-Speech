@@ -18,17 +18,25 @@ public class MessageHub extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_hub);
 		
+		try
+		{
 		MessageDB.loadMessages();
-		msgList = MessageDB.getList();
-						
-		Message m1 = new Message("This is message 1");
-		Message m2 = new Message("This is message 2");
+		//msgList = MessageDB.getList();
+	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, MessageDB.getList());
+	    setListAdapter(adapter);
+		}
+		catch(Exception e) {
+			
+		}
+		//msgList = new ArrayList<Message>();
 		
-		MessageDB.addMessage(m1);
-		MessageDB.addMessage(m2);		
-	    
-	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, msgList);
-	    setListAdapter(adapter);		
+						
+		//Message m1 = new Message("This is message 1");
+		//Message m2 = new Message("This is message 2");
+		
+		//MessageDB.addMessage(m1);
+		//MessageDB.addMessage(m2);		
+	    		
 		
 	}
 	
