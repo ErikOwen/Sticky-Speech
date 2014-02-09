@@ -22,11 +22,12 @@
             android:paddingBottom="@dimen/activity_vertical_margin"/>
 
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="New EditText"
-            android:id="@+id/editText" android:layout_marginLeft="29dp"
-            android:maxLength="500"
-            android:background="@color/BlanchedAlmond">
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New EditText"
+        android:layout_marginLeft="29dp"
+        android:maxLength="500"
+        android:background="@color/BlanchedAlmond">
     </EditText>
 </LinearLayout>

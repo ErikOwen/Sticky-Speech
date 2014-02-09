@@ -78,6 +78,7 @@ public class TakeNote extends Activity {
 				Message curMessage = new Message(textField.getText().toString());
 				try
 				{
+					MessageDB.loadMessages();
 					MessageDB.addMessage(curMessage);
 					MessageDB.saveMessages();
 				}
