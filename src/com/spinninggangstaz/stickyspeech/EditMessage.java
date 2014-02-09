@@ -35,6 +35,7 @@ public class EditMessage extends Activity {
         this.messageText = (EditText)findViewById(R.id.editText);
         this.messageText.setText("hello", TextView.BufferType.EDITABLE);
         setContentView(R.layout.edit_message);
+        //this.title = (TextView)findViewById(R.id.editNoteTitle);
         Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
         this.title.setTypeface(font);
     }

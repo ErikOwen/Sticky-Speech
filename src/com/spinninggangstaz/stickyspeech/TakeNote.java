@@ -25,15 +25,12 @@ public class TakeNote extends Activity {
 	private Button saveButton;
 	private EditText textField;
 	private ToggleButton microphone;
-	private boolean isRecording;
 	private static final int REQUEST_CODE = 1234;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
-		this.isRecording = false;
 		
 		initLayout();
 		initOnClickListeners();
@@ -68,15 +65,28 @@ public class TakeNote extends Activity {
 		
 		this.microphone.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				//if(!isRecording) {
-			        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-			        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-			                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
-			        startActivityForResult(intent, REQUEST_CODE);
-			        
-			        //Toast.makeText(getBaseContext(), "Should be recording", Toast.LENGTH_SHORT).show();
-				//}
+				Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+			    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+			    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+			    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+			    startActivityForResult(intent, REQUEST_CODE);
+			}
+		});
+		
+		this.saveButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				Message curMessage = new Message(textField.getText().toString());
+				try
+				{
+					MessageDB.addMessage(curMessage);
+					MessageDB.saveMessages();
+				}
+				catch(Exception e) {
+					//Toast.makeText(getApplicationContext(), "Unable to load file due to IO exception", Toast.LENGTH_LONG).show();
+				}
+				
+				Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
+				startActivity(startMessageHubActivity);
 			}
 		});
 	}
