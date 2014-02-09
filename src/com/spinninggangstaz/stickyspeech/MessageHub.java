@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class MessageHub extends ListActivity {
@@ -14,15 +17,41 @@ public class MessageHub extends ListActivity {
 	public ArrayAdapter<Message> adapter;
 	ArrayList<Message> msgList;
 	
+	// Search EditText
+    EditText inputSearch;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_hub);
 		
+		inputSearch = (EditText) findViewById(R.id.inputSearch);
+		
 		MessageDB.loadMessages();
 		msgList = MessageDB.getList();
 	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, MessageDB.getList());
 	    setListAdapter(adapter);	
+	    
+	    inputSearch.addTextChangedListener(new TextWatcher() {
+	        
+	        @Override
+	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+	            // When user changed the Text
+	            MessageHub.this.adapter.getFilter().filter(cs);   
+	        }
+	         
+	        @Override
+	        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+	                int arg3) {
+	            // TODO Auto-generated method stub
+	             
+	        }
+	         
+	        @Override
+	        public void afterTextChanged(Editable arg0) {
+	            // TODO Auto-generated method stub                          
+	        }
+	    });
 		
 	}
 	
