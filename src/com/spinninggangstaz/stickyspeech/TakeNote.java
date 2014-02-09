@@ -7,8 +7,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -24,12 +26,12 @@ public class TakeNote extends Activity {
 	private RelativeLayout rootView;
 	private RelativeLayout microphoneView;
 	private Button saveButton;
-	private EditText textField;
+	private LinedEditText textField;
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
 	private ArrayList<Message> messageList;
 	private RelativeLayout lowestLayout;
-	
+	private TextView title;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,12 +45,18 @@ public class TakeNote extends Activity {
 		setContentView(R.layout.take_note);
 		
 		this.rootView = (RelativeLayout)findViewById(R.id.takeNoteRootView);
+		this.title = (TextView)findViewById(R.id.takeNoteTitle);
 		this.microphoneView = (RelativeLayout)findViewById(R.id.microphoneLayout);
 		this.saveButton = (Button)findViewById(R.id.saveButton);
-		this.textField = (EditText)findViewById(R.id.noteTextBox);
+		this.textField = (LinedEditText)findViewById(R.id.noteTextBox);
 		this.microphone = (ToggleButton)findViewById(R.id.toggleMicrophone);
 		
+		/*this.textField = new LinedEditText(this, null);
+		this.textField.setHeight(0);
+		*/
+		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
+		this.title.setTypeface(font);
 		this.saveButton.setTypeface(font);
 	}
 	

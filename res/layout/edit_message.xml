@@ -27,11 +27,11 @@
     	        android:background="@drawable/back_background_selector"
     	        android:textSize="35sp"/>
     	</RelativeLayout>
-        <EditText 
+        <com.spinninggangstaz.stickyspeech.LinedEditText
             android:id="@+id/editText"
             android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_weight=".8"
+            android:layout_weight=".9"
             android:gravity="top"
             android:background="@color/yellow" />
 

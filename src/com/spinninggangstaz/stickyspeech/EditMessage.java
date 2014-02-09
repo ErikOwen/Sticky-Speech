@@ -19,7 +19,7 @@ import android.widget.TextView;
  * @date 2/8/14
  */
 public class EditMessage extends Activity {
-    private EditText messageText;
+    private LinedEditText messageText;
     private Button backButton;
     private int noteIndex;
     private Message currentMessage;
@@ -45,7 +45,7 @@ public class EditMessage extends Activity {
     private void initLayout() {
     	setContentView(R.layout.edit_message);
     	this.backButton = (Button)findViewById(R.id.backButton);
-        this.messageText = (EditText)findViewById(R.id.editText);
+        this.messageText = (LinedEditText)findViewById(R.id.editText);
         this.messageText.setText(this.currentMessage.toString(), TextView.BufferType.EDITABLE);
         this.messageText.setSelection(this.currentMessage.toString().length());
         

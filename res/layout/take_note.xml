@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/takeNoteRootView"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TakeNote" >
@@ -11,31 +12,55 @@
     	android:orientation="vertical"
     	android:weightSum="1"
     	>
-    	<RelativeLayout
+    	<LinearLayout
     	    android:id="@+id/titleLayout"
     		android:layout_width="match_parent"
     		android:layout_height="0dp"
+    		android:orientation="horizontal"
     		android:layout_weight=".1"
+    		android:weightSum="1"
     		android:background="@color/black">
-    		
+    		<RelativeLayout 
+    		    android:layout_width="0dp"
+    		    android:layout_height="wrap_content"
+    		    android:layout_weight=".2">
+    		    <ImageView
+    		        android:layout_height="45dp"
+    		        android:layout_width="45dp"
+    		        android:layout_centerInParent="true"
+    		        android:src="@drawable/sticky_icon_large_white"/>
+    		</RelativeLayout>
+			<TextView 
+			    android:id="@+id/takeNoteTitle"
+			    android:layout_height="wrap_content"
+			    android:layout_width="0dp"
+			    android:text="@string/stickySpeech"
+			    android:textSize="30sp"
+			    android:layout_gravity="center"
+			    android:textColor="@color/white"
+			    android:layout_weight=".55" />
     	    <Button 
     	        android:id="@+id/saveButton"
-    	        android:layout_width="match_parent"
+    	        android:layout_width="0dp"
     	        android:layout_height="wrap_content"
-    	        android:gravity="center_horizontal"
+    	        android:layout_weight=".25"
+    	        android:layout_gravity="left|center_vertical"
+    	        android:paddingRight="20sp"
     	        android:text="@string/saveTitle"
-    	        android:textColor="@color/white"
+    	        android:textColor="@color/black"
     	        android:background="@drawable/save_background_selector"
-    	        android:textSize="35sp"/>
-    	</RelativeLayout>
-        <EditText 
-            android:id="@+id/noteTextBox"
+    	        android:textSize="25sp"/>
+    	</LinearLayout>
+    	<com.spinninggangstaz.stickyspeech.LinedEditText
+    	    android:id="@+id/noteTextBox"
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:layout_weight=".8"
             android:gravity="top"
+            android:textSize="30sp"
             android:background="@color/yellow"
             android:hint="@string/noteHint" />
+
 		<RelativeLayout
             android:id="@+id/microphoneLayout"
             android:layout_width="match_parent"
