@@ -9,16 +9,19 @@ import java.util.ArrayList;
 
 public class MessageDB {
 	static ArrayList<Message> msgList;
+	private static boolean createdList = false;
 	
 	public static void addMessage(Message msg) {
-		if(msgList == null) {
-			msgList = new ArrayList<Message>();
-		}
 		msgList.add(msg);
 	}
 	
 	public static void deleteMessage(Message msg) {
 		msgList.remove(msg);
+	}
+	
+	public static void editMessage(int index, String str)
+	{
+		msgList.get(index).editText(str);
 	}
 	
 	public static ArrayList<Message> getList() {
@@ -64,9 +67,17 @@ public class MessageDB {
                 in = new ObjectInputStream(reader);
                 list = (ArrayList<Message>)in.readObject();
                 in.close();
-                fis.close();
                 
-                msgList = new ArrayList<Message>(list);
+                if(createdList == false) {
+                	createdList = true;
+                	msgList = new ArrayList<Message>();
+                }
+                msgList.clear();
+            	msgList.addAll(list);
+        	}
+        	else {
+        		msgList = new ArrayList<Message>();
+        		createdList = true;
         	}
         }
         catch (Exception ex) {

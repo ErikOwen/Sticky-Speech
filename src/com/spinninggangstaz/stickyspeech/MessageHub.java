@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MessageHub extends ListActivity {
 	
@@ -21,7 +22,7 @@ public class MessageHub extends ListActivity {
 		
 		MessageDB.loadMessages();
 		msgList = MessageDB.getList();
-	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, MessageDB.getList());
+	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, msgList);
 	    setListAdapter(adapter);	
 		
 	}
@@ -33,8 +34,15 @@ public class MessageHub extends ListActivity {
 		 Intent editNoteActivity = new Intent(MessageHub.this, EditMessage.class);
 		 editNoteActivity.putExtra("messageIndex", position);
 			
-		 startActivity(editNoteActivity);
+		 startActivityForResult(editNoteActivity, 1);
 		 
      }
+	 
+	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			msgList = MessageDB.getList();
+			adapter.notifyDataSetChanged();
+		}
+	}
 
 }

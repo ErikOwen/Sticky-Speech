@@ -26,6 +26,7 @@ public class TakeNote extends Activity {
 	private EditText textField;
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
+	private ArrayList<Message> messageList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
