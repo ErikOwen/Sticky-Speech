@@ -11,7 +11,7 @@
         />
         
         <ListView
-            android:id="@android:id/list"
+            android:id="@+id/android:list"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
         </ListView>

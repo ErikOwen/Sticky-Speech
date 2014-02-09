@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class MessageHub extends ListActivity {
 	
 	public ArrayAdapter<Message> adapter;
+	private ListView list;
 	ArrayList<Message> msgList;
 	
 	// Search EditText
@@ -26,6 +27,7 @@ public class MessageHub extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_hub);
 		
+		initLayout();
 		inputSearch = (EditText) findViewById(R.id.inputSearch);
 		
 		MessageDB.loadMessages();
@@ -56,6 +58,14 @@ public class MessageHub extends ListActivity {
 		
 	}
 	
+	private void initLayout() {
+		//this.list = (ListView)findViewById(R.id.list);
+		this.list = getListView();
+		
+		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+		list.setOnTouchListener(activitySwipeDetector);
+	}
+	
 	 @Override
      protected void onListItemClick(ListView l, View v, int position, long id) {
 		 super.onListItemClick(l, v, position, id);
@@ -73,5 +83,10 @@ public class MessageHub extends ListActivity {
 			adapter.notifyDataSetChanged();
 		}
 	}
+	
+	protected void goToNewNote() {
+	    Intent startNewNoteActivity = new Intent(MessageHub.this, TakeNote.class);
+		startActivity(startNewNoteActivity);
+	 }
 
 }

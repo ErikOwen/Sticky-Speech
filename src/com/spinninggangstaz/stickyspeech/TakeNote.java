@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -27,6 +28,7 @@ public class TakeNote extends Activity {
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
 	private ArrayList<Message> messageList;
+	private RelativeLayout lowestLayout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class TakeNote extends Activity {
 	}
 	
 	private void initOnClickListeners() {
+		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+		textField.setOnTouchListener(activitySwipeDetector);
+		
 		this.rootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		    @Override
 		    public void onGlobalLayout() {
@@ -114,6 +119,11 @@ public class TakeNote extends Activity {
         }
         
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    
+    protected void goToMessageHub() {
+    	Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
+		startActivity(startMessageHubActivity);
     }
 
 }
