@@ -9,5 +9,6 @@
     <string name="editMessage">Edit your message</string>
     <string name="title_activity_message_hub">MessageHub</string>
     <string name="saveTitle">Save</string>
+    <string name="backTitle">Back</string>
 
 </resources>
