@@ -21,6 +21,7 @@ import android.widget.TextView;
 public class EditMessage extends Activity {
     private LinedEditText messageText;
     private Button backButton;
+    private TextView title;
     private int noteIndex;
     private Message currentMessage;
 
@@ -46,12 +47,20 @@ public class EditMessage extends Activity {
     	setContentView(R.layout.edit_message);
     	this.backButton = (Button)findViewById(R.id.backButton);
         this.messageText = (LinedEditText)findViewById(R.id.editText);
+        this.title = (TextView)findViewById(R.id.editNoteTitle);
         this.messageText.setText(this.currentMessage.toString(), TextView.BufferType.EDITABLE);
         this.messageText.setSelection(this.currentMessage.toString().length());
+        
+		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
+		this.title.setTypeface(font);
+		this.backButton.setTypeface(font);
         
     }
     
     private void initListeners() {
+		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+		messageText.setOnTouchListener(activitySwipeDetector);
+		
     	this.backButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				MessageDB.editMessage(noteIndex, messageText.getText().toString());
@@ -62,5 +71,11 @@ public class EditMessage extends Activity {
 				finish();
 			}
 		});
+    }
+    
+    protected void returnWithoutSaving() {
+		Intent returnToMessageHubActivity = new Intent(EditMessage.this, MessageHub.class);
+		setResult(55, returnToMessageHubActivity);        
+		finish();
     }
 }

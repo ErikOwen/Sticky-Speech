@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.format.Time;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -51,13 +54,11 @@ public class TakeNote extends Activity {
 		this.textField = (LinedEditText)findViewById(R.id.noteTextBox);
 		this.microphone = (ToggleButton)findViewById(R.id.toggleMicrophone);
 		
-		/*this.textField = new LinedEditText(this, null);
-		this.textField.setHeight(0);
-		*/
-		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
 		this.saveButton.setTypeface(font);
+		
+		this.saveButton.setVisibility(View.INVISIBLE);
 	}
 	
 	private void initOnClickListeners() {
@@ -87,9 +88,37 @@ public class TakeNote extends Activity {
 			}
 		});
 		
+	    this.textField.addTextChangedListener(new TextWatcher() {
+	        
+	        @Override
+	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+	            if(cs.length() > 0) {
+	            	saveButton.setVisibility(View.VISIBLE);
+	            }
+	            else {
+	            	saveButton.setVisibility(View.INVISIBLE);
+	            }
+	        }
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				
+				
+			}
+	    });
+		
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				Message curMessage = new Message(textField.getText().toString());
+				Time now = new Time();
+				now.setToNow();
+				Message curMessage = new Message(textField.getText().toString(), now);
 				try
 				{
 					MessageDB.loadMessages();

@@ -29,6 +29,9 @@ public void onLeftToRightSwipe(){
     if(activity instanceof MessageHub) {
     	((MessageHub)activity).goToNewNote();
     }
+    else if(activity instanceof EditMessage) {
+    	((EditMessage)activity).returnWithoutSaving();
+    }
 }
 
 public void onTopToBottomSwipe(){

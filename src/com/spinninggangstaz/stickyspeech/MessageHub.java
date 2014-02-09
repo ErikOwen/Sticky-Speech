@@ -6,8 +6,10 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +26,7 @@ public class MessageHub extends ListActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_hub);
 		
@@ -78,9 +81,12 @@ public class MessageHub extends ListActivity {
      }
 	 
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
+		if (requestCode == 1 && resultCode == 1) {
 			msgList = MessageDB.getList();
 			adapter.notifyDataSetChanged();
+		}
+		else if(requestCode == 1 && resultCode == 55) {
+			Log.w("StickySpeech", "Returned without saving anything");
 		}
 	}
 	
