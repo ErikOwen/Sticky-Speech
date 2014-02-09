@@ -1,6 +1,7 @@
 package com.spinninggangstaz.stickyspeech;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.Time;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
@@ -116,9 +118,9 @@ public class TakeNote extends Activity {
 		
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				Time now = new Time();
-				now.setToNow();
-				Message curMessage = new Message(textField.getText().toString(), now);
+				Calendar date = Calendar.getInstance();
+				Log.w("StickySpeech", "Current date: " + date.toString());
+				Message curMessage = new Message(textField.getText().toString(), date);
 				try
 				{
 					MessageDB.loadMessages();

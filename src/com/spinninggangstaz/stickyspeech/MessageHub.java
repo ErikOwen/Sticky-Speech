@@ -36,7 +36,8 @@ public class MessageHub extends ListActivity {
 		MessageDB.loadMessages();
 		msgList = MessageDB.getList();
 	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, msgList);
-	    setListAdapter(adapter);	
+	    
+	    list.setAdapter(adapter);
 	    
 	    inputSearch.addTextChangedListener(new TextWatcher() {
 	        
