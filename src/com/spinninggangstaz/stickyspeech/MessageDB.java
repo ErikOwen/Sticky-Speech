@@ -30,7 +30,7 @@ public class MessageDB {
         FileOutputStream fout = null;
         ObjectOutputStream out = null;
         try {
-        	File file = new File("memoData/memoData.txt");
+        	File file = new File("memoData\\memoData.txt");
         		fout = new FileOutputStream(file);
                     
         		out = new ObjectOutputStream(fout);
