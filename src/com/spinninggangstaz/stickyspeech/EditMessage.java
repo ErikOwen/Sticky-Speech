@@ -17,13 +17,20 @@ import android.widget.TextView;
  */
 public class EditMessage extends Activity {
     private EditText messageText;
-    private TextView title;
     private Button backButton;
+    private int noteIndex;
+    private Message currentMessage;
 
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
+		Bundle bundle = getIntent().getExtras();
+		this.noteIndex = bundle.getInt("messageIndex");
+        
+		MessageDB.loadMessages();
+        this.currentMessage = MessageDB.getList().get(this.noteIndex);
+		
         initLayout();
     }
 
@@ -32,11 +39,9 @@ public class EditMessage extends Activity {
      * actual message text.
      */
     private void initLayout() {
+    	setContentView(R.layout.edit_message);
         this.messageText = (EditText)findViewById(R.id.editText);
-        this.messageText.setText("hello", TextView.BufferType.EDITABLE);
-        setContentView(R.layout.edit_message);
-        //this.title = (TextView)findViewById(R.id.editNoteTitle);
-        Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
-        this.title.setTypeface(font);
+        this.messageText.setText(this.currentMessage.toString(), TextView.BufferType.EDITABLE);
+        
     }
 }

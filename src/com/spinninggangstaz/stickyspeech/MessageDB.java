@@ -30,17 +30,25 @@ public class MessageDB {
         FileOutputStream fout = null;
         ObjectOutputStream out = null;
         try {
-        	File file = new File("memoData\\memoData.txt");
-        		fout = new FileOutputStream(file);
+        	File dir = new File(StickySpeechApplication.getAppContext().getFilesDir(), "memoData");
+        	File file = new File(StickySpeechApplication.getAppContext().getFilesDir(), "memoData/memoData.txt");
+        	
+        	if(!dir.isDirectory()) {
+        		dir.mkdir();
+        	}
+        	if(!file.isFile()) {
+        		file.createNewFile();
+        	}
+        	fout = new FileOutputStream(file);
                     
-        		out = new ObjectOutputStream(fout);
-        		out.writeObject(msgList);
-        		out.flush();
-        		out.close();
-        		fout.close();
+        	out = new ObjectOutputStream(fout);
+        	out.writeObject(msgList);
+        	out.flush();
+        	out.close();
+        	fout.close();
         }
         catch (IOException ioe) {
-            System.out.println("Error in save method");
+            Log.w("StickySpeech", "Unable to write to file.");
         }
     }
 
@@ -50,29 +58,20 @@ public class MessageDB {
         FileInputStream fis = null;
         ArrayList<Message> list = null;
         try {
-        	File file = new File("memoData/memoData.txt");
-        	boolean empty = !file.exists() || file.length() == 0;
-        	if(!empty) {
-            	InputStream reader = StickySpeechApplication.getAppContext()
-                	.getAssets().open("memoData/memoData.txt");
-
+        	File file = new File(StickySpeechApplication.getAppContext().getFilesDir(), "memoData/memoData.txt");
+        	if(file.exists() && file.length() > 0) {
+            	InputStream reader = new FileInputStream(file);
                 in = new ObjectInputStream(reader);
                 list = (ArrayList<Message>)in.readObject();
                 in.close();
                 fis.close();
+                
+                msgList = new ArrayList<Message>(list);
         	}
         }
         catch (Exception ex) {
-            System.out.println("Error in get method");
             Log.w("stickyspeech", "exception in Message DB load : " + ex.getMessage());
         }
-        if(list != null) {
-            msgList = list;
-        }
-        else {
-            msgList = new ArrayList<Message>();
-        }
-
     }
 
 
