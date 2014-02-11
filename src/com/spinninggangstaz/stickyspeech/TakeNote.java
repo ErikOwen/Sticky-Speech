@@ -37,10 +37,14 @@ public class TakeNote extends Activity {
 	private ArrayList<Message> messageList;
 	private RelativeLayout lowestLayout;
 	private TextView title;
+	private boolean hasNewNote;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
+		
+		this.hasNewNote = false;
 		
 		initLayout();
 		initOnClickListeners();
@@ -60,7 +64,8 @@ public class TakeNote extends Activity {
 		this.title.setTypeface(font);
 		this.saveButton.setTypeface(font);
 		
-		this.saveButton.setVisibility(View.INVISIBLE);
+		//this.saveButton.setVisibility(View.INVISIBLE);
+		this.saveButton.setText("My Notes");
 	}
 	
 	private void initOnClickListeners() {
@@ -95,10 +100,14 @@ public class TakeNote extends Activity {
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            if(cs.length() > 0) {
-	            	saveButton.setVisibility(View.VISIBLE);
+	            	saveButton.setText("Save Note");
+	            	hasNewNote = true;
+	            	//saveButton.setVisibility(View.VISIBLE);
 	            }
 	            else {
-	            	saveButton.setVisibility(View.INVISIBLE);
+	            	saveButton.setText("My Notes");
+	            	hasNewNote = false;
+	            	//saveButton.setVisibility(View.INVISIBLE);
 	            }
 	        }
 
@@ -118,18 +127,22 @@ public class TakeNote extends Activity {
 		
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				Calendar date = Calendar.getInstance();
-				Log.w("StickySpeech", "Current date: " + date.toString());
-				Message curMessage = new Message(textField.getText().toString(), date);
-				try
-				{
+				//Log.w("StickySpeech", "Current date: " + date.toString());
+				//Message curMessage = new Message(textField.getText().toString(), date);
+				//try
+				//{
+				if(hasNewNote) {
+					Calendar date = Calendar.getInstance();
+					Log.w("StickySpeech", "Current date: " + date.toString());
+					Message curMessage = new Message(textField.getText().toString(), date);
 					MessageDB.loadMessages();
 					MessageDB.addMessage(curMessage);
 					MessageDB.saveMessages();
 				}
-				catch(Exception e) {
+				//}
+				//catch(Exception e) {
 					//Toast.makeText(getApplicationContext(), "Unable to load file due to IO exception", Toast.LENGTH_LONG).show();
-				}
+				//}
 				
 				Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
 				startActivity(startMessageHubActivity);

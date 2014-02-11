@@ -3,15 +3,22 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,9 +27,9 @@ public class MessageHub extends ListActivity {
 	public ArrayAdapter<Message> adapter;
 	private ListView list;
 	ArrayList<Message> msgList;
-	
-	// Search EditText
-    EditText inputSearch;
+	private Button searchButton;
+    private EditText inputSearch;
+    private boolean searchBarVisible;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +38,31 @@ public class MessageHub extends ListActivity {
 		setContentView(R.layout.message_hub);
 		
 		initLayout();
-		inputSearch = (EditText) findViewById(R.id.inputSearch);
+		initOnClickListeners();
 		
 		MessageDB.loadMessages();
 		msgList = MessageDB.getList();
 	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, msgList);
 	    
 	    list.setAdapter(adapter);
-	    
-	    inputSearch.addTextChangedListener(new TextWatcher() {
+		
+	}
+	
+	private void initLayout() {
+		//this.list = (ListView)findViewById(R.id.list);
+		this.list = getListView();
+		this.searchButton = (Button)findViewById(R.id.searchButton);
+		this.inputSearch = (EditText) findViewById(R.id.inputSearch);
+		
+		this.searchBarVisible = false;
+		this.inputSearch.setVisibility(View.GONE);
+		
+		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+		list.setOnTouchListener(activitySwipeDetector);
+	}
+	
+	private void initOnClickListeners() {
+	    this.inputSearch.addTextChangedListener(new TextWatcher() {
 	        
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
@@ -59,15 +82,23 @@ public class MessageHub extends ListActivity {
 	            // TODO Auto-generated method stub                          
 	        }
 	    });
-		
-	}
-	
-	private void initLayout() {
-		//this.list = (ListView)findViewById(R.id.list);
-		this.list = getListView();
-		
-		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		list.setOnTouchListener(activitySwipeDetector);
+	    
+	    this.searchButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				if(searchBarVisible) {
+					inputSearch.setVisibility(View.GONE);
+					inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+					searchBarVisible = false;
+				}
+				else {
+					inputSearch.setVisibility(View.VISIBLE);
+				    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+				    inputSearch.requestFocus();
+					searchBarVisible = true;
+				}
+			}
+		});
 	}
 	
 	 @Override
