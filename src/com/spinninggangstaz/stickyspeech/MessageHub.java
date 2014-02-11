@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MessageHub extends ListActivity {
@@ -29,6 +31,7 @@ public class MessageHub extends ListActivity {
 	ArrayList<Message> msgList;
 	private Button searchButton;
     private EditText inputSearch;
+    private TextView title;
     private boolean searchBarVisible;
 	
 	@Override
@@ -53,9 +56,13 @@ public class MessageHub extends ListActivity {
 		this.list = getListView();
 		this.searchButton = (Button)findViewById(R.id.searchButton);
 		this.inputSearch = (EditText) findViewById(R.id.inputSearch);
+		this.title = (TextView)findViewById(R.id.MessageHubTitle);
 		
 		this.searchBarVisible = false;
 		this.inputSearch.setVisibility(View.GONE);
+		
+		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
+		this.title.setTypeface(font);
 		
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
 		list.setOnTouchListener(activitySwipeDetector);
