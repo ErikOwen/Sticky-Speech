@@ -1,34 +1,29 @@
 package com.spinninggangstaz.stickyspeech;
-import java.util.ArrayList;
 
+import java.util.List;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MessageHub extends ListActivity {
 	
 	public ArrayAdapter<Message> adapter;
 	private ListView list;
-	ArrayList<Message> msgList;
+	List<Message> msgList;
 	private Button searchButton;
     private EditText inputSearch;
     private TextView title;
