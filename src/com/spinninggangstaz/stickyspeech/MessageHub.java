@@ -16,14 +16,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MessageHub extends ListActivity {
 	
-	public ArrayAdapter<Message> adapter;
+	private ArrayAdapter<Message> adapter;
 	private ListView list;
-	List<Message> msgList;
+	private List<Message> msgList;
 	private Button searchButton;
     private EditText inputSearch;
     private TextView title;
@@ -60,7 +61,7 @@ public class MessageHub extends ListActivity {
 		this.title.setTypeface(font);
 		
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		list.setOnTouchListener(activitySwipeDetector);
+		this.list.setOnTouchListener(activitySwipeDetector);
 	}
 	
 	private void initOnClickListeners() {
