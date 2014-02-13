@@ -156,10 +156,7 @@ public class MessageHub extends ListActivity {
                 if (tt != null && m != null) {
                     tt.setText(m.toString());
                 }
-                if(bt != null && m != null) {
-                    bt.setText(m.getDate().toString());
-                }
-                if(bt != null){
+                if(bt != null && m.getDate() != null){
                     bt.setText(m.getDate().getTime().toString());
                 }
             }
