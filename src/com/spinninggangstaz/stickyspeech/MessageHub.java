@@ -1,5 +1,6 @@
 package com.spinninggangstaz.stickyspeech;
 
+import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
 import android.app.ListActivity;
@@ -9,7 +10,9 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -40,7 +43,7 @@ public class MessageHub extends ListActivity {
 		
 		MessageDB.loadMessages();
 		msgList = MessageDB.getList();
-	    adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, msgList);
+	    adapter = new MessageAdapter(this, android.R.layout.simple_list_item_1, msgList);
 	    
 	    list.setAdapter(adapter);
 		
@@ -129,4 +132,32 @@ public class MessageHub extends ListActivity {
 		startActivity(startNewNoteActivity);
 	 }
 
+    private class MessageAdapter extends ArrayAdapter<Message> {
+
+        private List<Message> items;
+
+        public MessageAdapter(Context context, int textViewResourceId, List<Message> items) {
+            super(context, textViewResourceId, items);
+            this.items = items;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.row, null);
+            }
+            Message m = items.get(position);
+            if (m != null) {
+                TextView tt = (TextView) v.findViewById(R.id.toptext);
+                TextView bt = (TextView) v.findViewById(R.id.bottomtext);
+                if (tt != null) {
+                    tt.setText(m.toString());                            }
+                if(bt != null){
+                    bt.setText(m.getDate().toString());
+                }
+            }
+            return v;
+        }
+    }
 }
