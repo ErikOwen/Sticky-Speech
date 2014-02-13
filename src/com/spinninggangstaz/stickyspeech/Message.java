@@ -32,4 +32,8 @@ public class Message implements Serializable{
 	public void setDate(Calendar setDate) {
 		this.date = setDate;
 	}
+
+    public Calendar getDate() {
+        return this.date;
+    }
 }
