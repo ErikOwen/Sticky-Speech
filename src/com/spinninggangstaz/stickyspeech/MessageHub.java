@@ -154,7 +154,7 @@ public class MessageHub extends ListActivity {
                 if (tt != null) {
                     tt.setText(m.toString());                            }
                 if(bt != null){
-                    bt.setText(m.getDate().toString());
+                    bt.setText(m.getDate().getTime().toString());
                 }
             }
             return v;
