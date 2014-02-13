@@ -2,3 +2,7 @@ bin/*
 gen/*
 project.properties
 .classpath
+.project
+res/drawable-hdpi/.DS_Store
+.settings
+.idea
