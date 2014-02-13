@@ -148,13 +148,14 @@ public class MessageHub extends ListActivity {
                 LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.row, null);
             }
+            
             Message m = items.get(position);
             if (m != null) {
                 TextView tt = (TextView) v.findViewById(R.id.toptext);
                 TextView bt = (TextView) v.findViewById(R.id.bottomtext);
-                if (tt != null) {
+                if (tt != null && m != null) {
                     tt.setText(m.toString());                            }
-                if(bt != null){
+                if(bt != null && m != null){
                     bt.setText(m.getDate().toString());
                 }
             }
