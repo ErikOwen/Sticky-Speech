@@ -1,21 +1,13 @@
 package com.spinninggangstaz.stickyspeech;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.format.Time;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -31,20 +23,14 @@ public class TakeNote extends Activity {
 	private RelativeLayout rootView;
 	private RelativeLayout microphoneView;
 	private Button saveButton;
-	private LinedEditText textField;
+	private EditText textField;
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
-	private ArrayList<Message> messageList;
-	private RelativeLayout lowestLayout;
-	private TextView title;
-	private boolean hasNewNote;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
-		this.hasNewNote = false;
 		
 		initLayout();
 		initOnClickListeners();
@@ -54,24 +40,16 @@ public class TakeNote extends Activity {
 		setContentView(R.layout.take_note);
 		
 		this.rootView = (RelativeLayout)findViewById(R.id.takeNoteRootView);
-		this.title = (TextView)findViewById(R.id.takeNoteTitle);
 		this.microphoneView = (RelativeLayout)findViewById(R.id.microphoneLayout);
 		this.saveButton = (Button)findViewById(R.id.saveButton);
-		this.textField = (LinedEditText)findViewById(R.id.noteTextBox);
+		this.textField = (EditText)findViewById(R.id.noteTextBox);
 		this.microphone = (ToggleButton)findViewById(R.id.toggleMicrophone);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
-		this.title.setTypeface(font);
 		this.saveButton.setTypeface(font);
-		
-		//this.saveButton.setVisibility(View.INVISIBLE);
-		this.saveButton.setText("My Notes");
 	}
 	
 	private void initOnClickListeners() {
-		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		textField.setOnTouchListener(activitySwipeDetector);
-		
 		this.rootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		    @Override
 		    public void onGlobalLayout() {
@@ -95,54 +73,18 @@ public class TakeNote extends Activity {
 			}
 		});
 		
-	    this.textField.addTextChangedListener(new TextWatcher() {
-	        
-	        @Override
-	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-	            if(cs.length() > 0) {
-	            	saveButton.setText("Save Note");
-	            	hasNewNote = true;
-	            	//saveButton.setVisibility(View.VISIBLE);
-	            }
-	            else {
-	            	saveButton.setText("My Notes");
-	            	hasNewNote = false;
-	            	//saveButton.setVisibility(View.INVISIBLE);
-	            }
-	        }
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				
-				
-			}
-	    });
-		
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				//Log.w("StickySpeech", "Current date: " + date.toString());
-				//Message curMessage = new Message(textField.getText().toString(), date);
-				//try
-				//{
-				if(hasNewNote) {
-					Calendar date = Calendar.getInstance();
-					Log.w("StickySpeech", "Current date: " + date.toString());
-					Message curMessage = new Message(textField.getText().toString(), date);
+				Message curMessage = new Message(textField.getText().toString());
+				try
+				{
 					MessageDB.loadMessages();
 					MessageDB.addMessage(curMessage);
 					MessageDB.saveMessages();
 				}
-				//}
-				//catch(Exception e) {
+				catch(Exception e) {
 					//Toast.makeText(getApplicationContext(), "Unable to load file due to IO exception", Toast.LENGTH_LONG).show();
-				//}
+				}
 				
 				Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
 				startActivity(startMessageHubActivity);
@@ -171,11 +113,6 @@ public class TakeNote extends Activity {
         }
         
         super.onActivityResult(requestCode, resultCode, data);
-    }
-    
-    protected void goToMessageHub() {
-    	Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
-		startActivity(startMessageHubActivity);
     }
 
 }
