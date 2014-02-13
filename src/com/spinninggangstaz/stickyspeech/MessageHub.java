@@ -154,11 +154,16 @@ public class MessageHub extends ListActivity {
                 TextView tt = (TextView) v.findViewById(R.id.toptext);
                 TextView bt = (TextView) v.findViewById(R.id.bottomtext);
                 if (tt != null && m != null) {
-                    tt.setText(m.toString());                            }
-                if(bt != null && m != null){
+                    tt.setText(m.toString());
+                }
+                if(bt != null && m != null) {
                     bt.setText(m.getDate().toString());
                 }
+                if(bt != null){
+                    bt.setText(m.getDate().getTime().toString());
+                }
             }
+                
             return v;
         }
     }
