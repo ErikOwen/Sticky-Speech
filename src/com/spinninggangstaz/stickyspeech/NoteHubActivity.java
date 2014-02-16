@@ -28,7 +28,7 @@ public class NoteHubActivity extends ListActivity {
 	
 	private ArrayAdapter<Note> adapter;
 	private ListView list;
-	private List<Note> msgList;
+	private List<Note> noteList;
 	private Button searchButton;
     private EditText inputSearch;
     private TextView title;
@@ -44,8 +44,8 @@ public class NoteHubActivity extends ListActivity {
 		initOnClickListeners();
 		
 		NoteDB.loadNotes();
-		msgList = NoteDB.getList();
-	    adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, msgList);
+		noteList = NoteDB.getList();
+	    adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
 	    
 	    list.setAdapter(adapter);
 		
@@ -120,7 +120,7 @@ public class NoteHubActivity extends ListActivity {
 	 
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == 1) {
-			msgList = NoteDB.getList();
+			noteList = NoteDB.getList();
 			adapter.notifyDataSetChanged();
 		}
 		else if(requestCode == 1 && resultCode == 55) {
@@ -135,6 +135,7 @@ public class NoteHubActivity extends ListActivity {
 
     private class NoteAdapter extends ArrayAdapter<Note> {
         private List<Note> items;
+        private NoteDateFormatter dateFormatter = new HoursAgoDateFormatter();
 
         public NoteAdapter(Context context, int textViewResourceId, List<Note> items) {
             super(context, textViewResourceId, items);
@@ -150,13 +151,13 @@ public class NoteHubActivity extends ListActivity {
             
             Note note = items.get(position);
             if (note != null) {
-                TextView topText = (TextView) convertView.findViewById(R.id.toptext);
-                TextView bottomText = (TextView) convertView.findViewById(R.id.bottomtext);
+                TextView topText = (TextView)convertView.findViewById(R.id.toptext);
+                TextView bottomText = (TextView)convertView.findViewById(R.id.bottomtext);
                 if (topText != null && note != null) {
-                    topText.setText(note.toString());
+                    topText.setText(note.getTitle());
                 }
                 if(bottomText != null && note.getDate() != null){
-                    bottomText.setText(note.getDate().getTime().toString());
+                    bottomText.setText(dateFormatter.getFormattedDate(note));
                 }
             }
                 

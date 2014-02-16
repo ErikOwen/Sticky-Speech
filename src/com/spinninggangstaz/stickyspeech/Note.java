@@ -14,10 +14,12 @@ public class Note implements Serializable{
 	
 	public Note(String text) {
 		this.text = text;
+		this.title = text;
 	}
 	
 	public Note(String text, Calendar date) {
 		this.text = text;
+		this.title = text;
 		this.date = date;
 	}
 	
@@ -42,6 +44,9 @@ public class Note implements Serializable{
     }
     
     public String getTitle() {
-    	return title;
+    	if (title != null && title.length() > 0)
+    		return title;
+    	else
+    		return text;
     }
 }
