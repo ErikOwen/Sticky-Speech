@@ -2,6 +2,7 @@ package com.spinninggangstaz.stickyspeech;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *  A sticky note
@@ -36,6 +37,9 @@ public class Note implements Serializable{
 	}
 
     public Calendar getDate() {
+    	if (this.date == null) {
+    		this.date = new GregorianCalendar();
+    	}
         return this.date;
     }
     

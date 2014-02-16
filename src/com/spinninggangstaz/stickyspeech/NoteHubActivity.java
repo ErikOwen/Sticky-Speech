@@ -153,10 +153,10 @@ public class NoteHubActivity extends ListActivity {
             if (note != null) {
                 TextView topText = (TextView)convertView.findViewById(R.id.toptext);
                 TextView bottomText = (TextView)convertView.findViewById(R.id.bottomtext);
-                if (topText != null && note != null) {
+                if (topText != null) {
                     topText.setText(note.getTitle());
                 }
-                if(bottomText != null && note.getDate() != null){
+                if(bottomText != null){
                     bottomText.setText(dateFormatter.getFormattedDate(note));
                 }
             }
