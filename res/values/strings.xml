@@ -6,9 +6,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="stickySpeech">Sticky Speech</string>
     <string name="noteHint">Enter your note here!</string>
-    <string name="editMessage">Edit your message</string>
-    <string name="title_activity_message_hub">MessageHub</string>
+    <string name="editNote">Edit your message</string>
+    <string name="title_activity_note_hub">NoteHub</string>
     <string name="saveTitle">Save</string>
     <string name="backTitle">Back</string>
+    <string name="searchBar">Search Stickies…</string>
 
 </resources>

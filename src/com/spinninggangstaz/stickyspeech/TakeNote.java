@@ -10,21 +10,14 @@ import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.Time;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class TakeNote extends Activity {
@@ -34,8 +27,6 @@ public class TakeNote extends Activity {
 	private LinedEditText textField;
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
-	private ArrayList<Message> messageList;
-	private RelativeLayout lowestLayout;
 	private TextView title;
 	private boolean hasNewNote;
 	
@@ -64,7 +55,6 @@ public class TakeNote extends Activity {
 		this.title.setTypeface(font);
 		this.saveButton.setTypeface(font);
 		
-		//this.saveButton.setVisibility(View.INVISIBLE);
 		this.saveButton.setText("My Notes");
 	}
 	
@@ -102,12 +92,10 @@ public class TakeNote extends Activity {
 	            if(cs.length() > 0) {
 	            	saveButton.setText("Save Note");
 	            	hasNewNote = true;
-	            	//saveButton.setVisibility(View.VISIBLE);
 	            }
 	            else {
 	            	saveButton.setText("My Notes");
 	            	hasNewNote = false;
-	            	//saveButton.setVisibility(View.INVISIBLE);
 	            }
 	        }
 
@@ -127,25 +115,17 @@ public class TakeNote extends Activity {
 		
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				//Log.w("StickySpeech", "Current date: " + date.toString());
-				//Message curMessage = new Message(textField.getText().toString(), date);
-				//try
-				//{
 				if(hasNewNote) {
 					Calendar date = Calendar.getInstance();
 					Log.w("StickySpeech", "Current date: " + date.toString());
-					Message curMessage = new Message(textField.getText().toString(), date);
-					MessageDB.loadMessages();
-					MessageDB.addMessage(curMessage);
-					MessageDB.saveMessages();
+					Note curNote = new Note(textField.getText().toString(), date);
+					NoteDB.loadNotes();
+					NoteDB.addNote(curNote);
+					NoteDB.saveNotes();
 				}
-				//}
-				//catch(Exception e) {
-					//Toast.makeText(getApplicationContext(), "Unable to load file due to IO exception", Toast.LENGTH_LONG).show();
-				//}
 				
-				Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
-				startActivity(startMessageHubActivity);
+				Intent startNoteHubActivity = new Intent(TakeNote.this, NoteHubActivity.class);
+				startActivity(startNoteHubActivity);
 			}
 		});
 	}
@@ -173,9 +153,9 @@ public class TakeNote extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
     }
     
-    protected void goToMessageHub() {
-    	Intent startMessageHubActivity = new Intent(TakeNote.this, MessageHub.class);
-		startActivity(startMessageHubActivity);
+    protected void gotoNoteHub() {
+    	Intent startNoteHubActivity = new Intent(TakeNote.this, NoteHubActivity.class);
+		startActivity(startNoteHubActivity);
     }
 
 }

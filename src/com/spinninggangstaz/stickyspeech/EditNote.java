@@ -11,27 +11,27 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * This class represents the screen used to edit messages
+ * This class represents the screen used to edit notes
  *
  * @author Kevin
  * @date 2/8/14
  */
-public class EditMessage extends Activity {
-    private LinedEditText messageText;
+public class EditNote extends Activity {
+    private LinedEditText noteText;
     private Button backButton;
     private TextView title;
     private int noteIndex;
-    private Message currentMessage;
+    private Note currentNote;
 
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
 		Bundle bundle = getIntent().getExtras();
-		this.noteIndex = bundle.getInt("messageIndex");
+		this.noteIndex = bundle.getInt("noteIndex");
         
-		MessageDB.loadMessages();
-        this.currentMessage = MessageDB.getList().get(this.noteIndex);
+		NoteDB.loadNotes();
+        this.currentNote = NoteDB.getList().get(this.noteIndex);
 		
         initLayout();
         initListeners();
@@ -39,15 +39,15 @@ public class EditMessage extends Activity {
 
     /**
      * Lays out the gui.  Need to implement so it populates with an
-     * actual message text.
+     * actual note text.
      */
     private void initLayout() {
-    	setContentView(R.layout.edit_message);
+    	setContentView(R.layout.edit_note);
     	this.backButton = (Button)findViewById(R.id.backButton);
-        this.messageText = (LinedEditText)findViewById(R.id.editText);
+        this.noteText = (LinedEditText)findViewById(R.id.editText);
         this.title = (TextView)findViewById(R.id.editNoteTitle);
-        this.messageText.setText(this.currentMessage.toString(), TextView.BufferType.EDITABLE);
-        this.messageText.setSelection(this.currentMessage.toString().length());
+        this.noteText.setText(this.currentNote.toString(), TextView.BufferType.EDITABLE);
+        this.noteText.setSelection(this.currentNote.toString().length());
         
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
@@ -57,23 +57,23 @@ public class EditMessage extends Activity {
     
     private void initListeners() {
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		messageText.setOnTouchListener(activitySwipeDetector);
+		noteText.setOnTouchListener(activitySwipeDetector);
 		
     	this.backButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				MessageDB.editMessage(noteIndex, messageText.getText().toString());
-				MessageDB.saveMessages();
+				NoteDB.editNote(noteIndex, noteText.getText().toString());
+				NoteDB.saveNotes();
 				
-				Intent returnToMessageHubActivity = new Intent(EditMessage.this, MessageHub.class);
-				setResult(1, returnToMessageHubActivity);        
+				Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
+				setResult(1, returnToNoteHubActivity);        
 				finish();
 			}
 		});
     }
     
     protected void returnWithoutSaving() {
-		Intent returnToMessageHubActivity = new Intent(EditMessage.this, MessageHub.class);
-		setResult(55, returnToMessageHubActivity);        
+		Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
+		setResult(55, returnToNoteHubActivity);        
 		finish();
     }
 }

@@ -1,6 +1,5 @@
 package com.spinninggangstaz.stickyspeech;
 
-import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
 import android.app.ListActivity;
@@ -19,15 +18,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MessageHub extends ListActivity {
+/**
+ * The view of the app's list of notes 
+ */
+public class NoteHubActivity extends ListActivity {
 	
-	private ArrayAdapter<Message> adapter;
+	private ArrayAdapter<Note> adapter;
 	private ListView list;
-	private List<Message> msgList;
+	private List<Note> msgList;
 	private Button searchButton;
     private EditText inputSearch;
     private TextView title;
@@ -37,25 +38,24 @@ public class MessageHub extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.message_hub);
+		setContentView(R.layout.note_hub);
 		
 		initLayout();
 		initOnClickListeners();
 		
-		MessageDB.loadMessages();
-		msgList = MessageDB.getList();
-	    adapter = new MessageAdapter(this, android.R.layout.simple_list_item_1, msgList);
+		NoteDB.loadNotes();
+		msgList = NoteDB.getList();
+	    adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, msgList);
 	    
 	    list.setAdapter(adapter);
 		
 	}
 	
 	private void initLayout() {
-		//this.list = (ListView)findViewById(R.id.list);
 		this.list = getListView();
 		this.searchButton = (Button)findViewById(R.id.searchButton);
 		this.inputSearch = (EditText) findViewById(R.id.inputSearch);
-		this.title = (TextView)findViewById(R.id.MessageHubTitle);
+		this.title = (TextView)findViewById(R.id.NoteHubTitle);
 		
 		this.searchBarVisible = false;
 		this.inputSearch.setVisibility(View.GONE);
@@ -73,7 +73,7 @@ public class MessageHub extends ListActivity {
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            // When user changed the Text
-	            MessageHub.this.adapter.getFilter().filter(cs);   
+	            NoteHubActivity.this.adapter.getFilter().filter(cs);   
 	        }
 	         
 	        @Override
@@ -111,8 +111,8 @@ public class MessageHub extends ListActivity {
      protected void onListItemClick(ListView l, View v, int position, long id) {
 		 super.onListItemClick(l, v, position, id);
 		 
-		 Intent editNoteActivity = new Intent(MessageHub.this, EditMessage.class);
-		 editNoteActivity.putExtra("messageIndex", position);
+		 Intent editNoteActivity = new Intent(NoteHubActivity.this, EditNote.class);
+		 editNoteActivity.putExtra("noteIndex", position);
 			
 		 startActivityForResult(editNoteActivity, 1);
 		 
@@ -120,7 +120,7 @@ public class MessageHub extends ListActivity {
 	 
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == 1) {
-			msgList = MessageDB.getList();
+			msgList = NoteDB.getList();
 			adapter.notifyDataSetChanged();
 		}
 		else if(requestCode == 1 && resultCode == 55) {
@@ -129,39 +129,38 @@ public class MessageHub extends ListActivity {
 	}
 	
 	protected void goToNewNote() {
-	    Intent startNewNoteActivity = new Intent(MessageHub.this, TakeNote.class);
+	    Intent startNewNoteActivity = new Intent(NoteHubActivity.this, TakeNote.class);
 		startActivity(startNewNoteActivity);
 	 }
 
-    private class MessageAdapter extends ArrayAdapter<Message> {
+    private class NoteAdapter extends ArrayAdapter<Note> {
+        private List<Note> items;
 
-        private List<Message> items;
-
-        public MessageAdapter(Context context, int textViewResourceId, List<Message> items) {
+        public NoteAdapter(Context context, int textViewResourceId, List<Note> items) {
             super(context, textViewResourceId, items);
             this.items = items;
         }
+        
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.row, null);
+            if (convertView == null) {
+                LayoutInflater inflaterService = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflaterService.inflate(R.layout.row, null);
             }
             
-            Message m = items.get(position);
-            if (m != null) {
-                TextView tt = (TextView) v.findViewById(R.id.toptext);
-                TextView bt = (TextView) v.findViewById(R.id.bottomtext);
-                if (tt != null && m != null) {
-                    tt.setText(m.toString());
+            Note note = items.get(position);
+            if (note != null) {
+                TextView topText = (TextView) convertView.findViewById(R.id.toptext);
+                TextView bottomText = (TextView) convertView.findViewById(R.id.bottomtext);
+                if (topText != null && note != null) {
+                    topText.setText(note.toString());
                 }
-                if(bt != null && m.getDate() != null){
-                    bt.setText(m.getDate().getTime().toString());
+                if(bottomText != null && note.getDate() != null){
+                    bottomText.setText(note.getDate().getTime().toString());
                 }
             }
                 
-            return v;
+            return convertView;
         }
     }
 }

@@ -21,18 +21,18 @@ public class ActivitySwipeDetector implements View.OnTouchListener {
 	public void onRightToLeftSwipe(){
 	    Log.i(logTag, "RightToLeftSwipe!");
 	    if(activity instanceof TakeNote) {
-	    	((TakeNote)activity).goToMessageHub();
+	    	((TakeNote)activity).gotoNoteHub();
 	    }
 	
 	}
 	
 	public void onLeftToRightSwipe(){
 	    Log.i(logTag, "LeftToRightSwipe!");
-	    if(activity instanceof MessageHub) {
-	    	((MessageHub)activity).goToNewNote();
+	    if(activity instanceof NoteHubActivity) {
+	    	((NoteHubActivity)activity).goToNewNote();
 	    }
-	    else if(activity instanceof EditMessage) {
-	    	((EditMessage)activity).returnWithoutSaving();
+	    else if(activity instanceof EditNote) {
+	    	((EditNote)activity).returnWithoutSaving();
 	    }
 	}
 	

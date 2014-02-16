@@ -5,29 +5,29 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageDB {
-	static List<Message> msgList = new ArrayList<Message>();
+public class NoteDB {
+	static List<Note> noteList = new ArrayList<Note>();
 	static final String dbDirectory = "memoData";
 	static final String dbFile = "memoData/memoData.txt";
 	
-	public static void addMessage(Message msg) {
-		msgList.add(msg);
+	public static void addNote(Note msg) {
+		noteList.add(msg);
 	}
 	
-	public static void deleteMessage(Message msg) {
-		msgList.remove(msg);
+	public static void deleteNote(Note msg) {
+		noteList.remove(msg);
 	}
 	
-	public static void editMessage(int index, String str)
+	public static void editNote(int index, String str)
 	{
-		msgList.get(index).editText(str);
+		noteList.get(index).editText(str);
 	}
 	
-	public static List<Message> getList() {
-		return msgList;
+	public static List<Note> getList() {
+		return noteList;
 	}
 
-    public static void saveMessages()
+    public static void saveNotes()
     {
         try {
             writeFile();
@@ -53,19 +53,19 @@ public class MessageDB {
 		fout = new FileOutputStream(file);
 		        
 		out = new ObjectOutputStream(fout);
-		out.writeObject(msgList);
+		out.writeObject(noteList);
 		out.flush();
 		out.close();
 		fout.close();
 	}
 
-    public static void loadMessages()
+    public static void loadNotes()
     {
         try {
         	loadFromFile();
         }
         catch (Exception ex) {
-            Log.w("stickyspeech", "exception in Message DB load : " + ex.getMessage());
+            Log.w("stickyspeech", "exception in NoteDB load : " + ex.getMessage());
         }
     }
 
@@ -74,14 +74,14 @@ public class MessageDB {
 			StreamCorruptedException, IOException, OptionalDataException,
 			ClassNotFoundException {
 		File file = new File(StickySpeechApplication.getAppContext().getFilesDir(), dbFile);
-		msgList.clear();
+		noteList.clear();
 		if (file.exists() && file.length() > 0) {
 			InputStream reader = new FileInputStream(file);
 			ObjectInputStream in = new ObjectInputStream(reader);
-		    List<Message> loadedList = (ArrayList<Message>)in.readObject();
+		    List<Note> loadedList = (ArrayList<Note>)in.readObject();
 		    in.close();
 
-			msgList.addAll(loadedList);
+			noteList.addAll(loadedList);
 		}
 	}
 

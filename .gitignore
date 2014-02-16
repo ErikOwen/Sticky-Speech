@@ -5,4 +5,4 @@ project.properties
 .project
 res/drawable-hdpi/.DS_Store
 .settings
-.idea
+.idea/
