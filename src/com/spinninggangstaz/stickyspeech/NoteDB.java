@@ -21,7 +21,7 @@ public class NoteDB {
 	public static void editNoteText(int index, String str)
 	{
 		noteList.get(index).editText(str);
-		noteList.get(index).setTitle(str);
+		//noteList.get(index).setTitle(str);
 	}
 	
 	public static List<Note> getList() {

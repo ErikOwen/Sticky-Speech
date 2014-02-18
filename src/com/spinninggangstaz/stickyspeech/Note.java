@@ -11,6 +11,7 @@ public class Note implements Serializable{
 	private String title;
 	private String text;
 	private Calendar date;
+	private static final int titleLength = 12;
     private static final long serialVersionUID = 7526471155622776147L;
 	
 	public Note(String text) {
@@ -20,7 +21,7 @@ public class Note implements Serializable{
 	
 	public Note(String text, Calendar date) {
 		this.text = text;
-		this.title = text;
+		this.setTitle();
 		this.date = date;
 	}
 	
@@ -30,6 +31,7 @@ public class Note implements Serializable{
 	
 	public void editText(String newText) {
 		this.text = newText;
+		setTitle();
 	}
 	
 	public void setDate(Calendar setDate) {
@@ -43,14 +45,16 @@ public class Note implements Serializable{
         return this.date;
     }
     
-    public void setTitle(String title) {
-    	this.title = title;
+    private void setTitle() {
+    	if(this.text.length() < titleLength) {
+    		this.title = this.text;
+    	}
+    	else {
+    		this.title = this.text.substring(0, titleLength) + "...";
+    	}
     }
     
     public String getTitle() {
-    	if (title != null && title.length() > 0)
-    		return title;
-    	else
-    		return text;
+    	return this.title;
     }
 }

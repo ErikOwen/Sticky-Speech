@@ -117,6 +117,7 @@ public class NoteHubActivity extends ListActivity {
 	        	 aBuilder.setTitle("Delete Note Confirmation");
 	        	 aBuilder.setMessage("Do you really want to delete \"" + adapter.getItem(position).getTitle() + "\"?");
 	        	 aBuilder.setCancelable(false);
+	        	 aBuilder.setIcon(R.drawable.delete_icon);
 	        	 /*.setIcon(android.R.drawable.ic_dialog_alert)*/
 	        	 aBuilder.setNegativeButton(getResources().getString(R.string.noOption), new DialogInterface.OnClickListener() {
 
