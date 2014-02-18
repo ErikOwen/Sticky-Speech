@@ -128,10 +128,11 @@ public class NoteHubActivity extends ListActivity {
 	        	 aBuilder.setPositiveButton(getResources().getString(R.string.yesOption), new DialogInterface.OnClickListener() {
 
 	        	     public void onClick(DialogInterface dialog, int whichButton) {
-	        	         noteList.remove(position);
+	        	         //noteList.remove(position);
 	        	         NoteDB.loadNotes();
 	        	         NoteDB.deleteNote(position);
 	        	         NoteDB.saveNotes();
+	        	         noteList = NoteDB.getList();
 	        	         
 	        	         adapter.notifyDataSetChanged();
 	        	 }});
@@ -184,7 +185,10 @@ public class NoteHubActivity extends ListActivity {
                 convertView = inflaterService.inflate(R.layout.row, null);
             }
             
-            Note note = items.get(position);
+            Note note = null;
+            if(position >= 0 && position < items.size()) {
+            	note = items.get(position);
+            }
             if (note != null) {
                 TextView topText = (TextView)convertView.findViewById(R.id.toptext);
                 TextView bottomText = (TextView)convertView.findViewById(R.id.bottomtext);

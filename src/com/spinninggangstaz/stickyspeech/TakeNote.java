@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class TakeNote extends Activity {
@@ -39,6 +40,13 @@ public class TakeNote extends Activity {
 		
 		initLayout();
 		initOnClickListeners();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		//Toast.makeText(this, "onresume hit", Toast.LENGTH_LONG).show();
+		this.textField.setText("");
 	}
 	
 	private void initLayout() {
