@@ -2,8 +2,10 @@ package com.spinninggangstaz.stickyspeech;
 
 import java.util.List;
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.Editable;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -105,6 +109,36 @@ public class NoteHubActivity extends ListActivity {
 				}
 			}
 		});
+	    
+	    this.getListView().setLongClickable(true);
+	    this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+	         public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+	        	 AlertDialog.Builder aBuilder = new AlertDialog.Builder(NoteHubActivity.this);
+	        	 aBuilder.setTitle("Delete Note Confirmation");
+	        	 aBuilder.setMessage("Do you really want to delete \"" + adapter.getItem(position).getTitle() + "\"?");
+	        	 aBuilder.setCancelable(false);
+	        	 /*.setIcon(android.R.drawable.ic_dialog_alert)*/
+	        	 aBuilder.setNegativeButton(getResources().getString(R.string.noOption), new DialogInterface.OnClickListener() {
+
+		        	     public void onClick(DialogInterface dialog, int whichButton) {
+		        	    	 
+		         }});
+	        	 
+	        	 aBuilder.setPositiveButton(getResources().getString(R.string.yesOption), new DialogInterface.OnClickListener() {
+
+	        	     public void onClick(DialogInterface dialog, int whichButton) {
+	        	         noteList.remove(position);
+	        	         NoteDB.loadNotes();
+	        	         NoteDB.deleteNote(position);
+	        	         NoteDB.saveNotes();
+	        	         
+	        	         adapter.notifyDataSetChanged();
+	        	 }});
+	        	 
+	        	 aBuilder.show();
+	             return true;
+	         }
+	     });
 	}
 	
 	 @Override

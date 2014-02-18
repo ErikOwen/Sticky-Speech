@@ -14,13 +14,14 @@ public class NoteDB {
 		noteList.add(msg);
 	}
 	
-	public static void deleteNote(Note msg) {
-		noteList.remove(msg);
+	public static void deleteNote(int position) {
+		noteList.remove(position);
 	}
 	
-	public static void editNote(int index, String str)
+	public static void editNoteText(int index, String str)
 	{
 		noteList.get(index).editText(str);
+		noteList.get(index).setTitle(str);
 	}
 	
 	public static List<Note> getList() {

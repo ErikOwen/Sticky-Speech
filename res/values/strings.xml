@@ -11,5 +11,7 @@
     <string name="saveTitle">Save</string>
     <string name="backTitle">Back</string>
     <string name="searchBar">Search Stickies…</string>
+    <string name="yesOption">Yes</string>
+    <string name="noOption">No</string>
 
 </resources>

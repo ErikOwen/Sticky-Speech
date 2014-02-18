@@ -61,7 +61,7 @@ public class EditNote extends Activity {
 		
     	this.backButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				NoteDB.editNote(noteIndex, noteText.getText().toString());
+				NoteDB.editNoteText(noteIndex, noteText.getText().toString());
 				NoteDB.saveNotes();
 				
 				Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
