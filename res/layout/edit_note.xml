@@ -19,26 +19,6 @@
     		android:layout_weight=".1"
     		android:weightSum="1"
     		android:background="@color/black">
-			<RelativeLayout 
-    		    android:layout_width="0dp"
-    		    android:layout_height="wrap_content"
-    		    android:layout_weight=".25">
-    		    <ImageView
-    		        android:layout_height="45dp"
-    		        android:layout_width="45dp"
-    		        android:layout_centerInParent="true"
-    		        android:src="@drawable/sticky_icon_large_white"/>
-    		</RelativeLayout>
-			<TextView 
-			    android:id="@+id/editNoteTitle"
-			    android:layout_height="wrap_content"
-			    android:layout_width="0dp"
-			    android:text="@string/editNoteTitle"
-			    android:textSize="40sp"
-			    android:gravity="center"
-			    android:textColor="@color/white"
-			    android:layout_weight=".50" />
-
 			<Button 
     	        android:id="@+id/backButton"
     	        android:layout_width="0dp"
@@ -49,6 +29,28 @@
     	        android:textColor="@color/black"
     	        android:background="@drawable/back_background_selector"
     	        android:textSize="25sp"/>
+			<TextView 
+			    android:id="@+id/editNote"
+			    android:layout_height="wrap_content"
+			    android:layout_width="0dp"
+			    android:text="@string/editNoteTitle"
+			    android:textSize="40sp"
+			    android:gravity="center"
+			    android:textColor="@color/white"
+			    android:layout_weight=".50" />
+			<RelativeLayout 
+    		    android:layout_width="0dp"
+    		    android:layout_height="wrap_content"
+    		    android:layout_weight=".25">
+    		    <ImageView
+    		        android:layout_height="45dp"
+    		        android:layout_width="45dp"
+    		        android:layout_centerInParent="true"
+    		        android:src="@drawable/sticky_icon_large_white"/>
+    		</RelativeLayout>
+
+
+
     	</LinearLayout>
     	<com.spinninggangstaz.stickyspeech.LinedEditText
     	    android:id="@+id/editText"

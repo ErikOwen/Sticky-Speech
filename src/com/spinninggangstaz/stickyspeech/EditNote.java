@@ -45,7 +45,7 @@ public class EditNote extends Activity {
     	setContentView(R.layout.edit_note);
     	this.backButton = (Button)findViewById(R.id.backButton);
         this.noteText = (LinedEditText)findViewById(R.id.editText);
-        this.title = (TextView)findViewById(R.id.editNoteTitle);
+        this.title = (TextView)findViewById(R.id.editNote);
         this.noteText.setText(this.currentNote.toString(), TextView.BufferType.EDITABLE);
         this.noteText.setSelection(this.currentNote.toString().length());
         
