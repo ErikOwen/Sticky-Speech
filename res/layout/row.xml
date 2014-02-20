@@ -27,6 +27,8 @@
                 		android:layout_width="fill_parent"
                 		android:layout_height="wrap_content"
                 		android:layout_weight="1"
+                		android:singleLine="true"
+                		android:ellipsize="end"
                 		android:gravity="center_vertical"
                 		android:textSize="25sp" />
         			<TextView
@@ -35,7 +37,7 @@
                 		android:layout_height="wrap_content"
                 		android:layout_weight="1"
                 		android:singleLine="true"
-                		android:ellipsize="marquee" />
+                		android:ellipsize="end" />
                 </LinearLayout>
                 
                 

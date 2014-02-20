@@ -12,7 +12,7 @@ public class Note implements Serializable{
 	private String text;
 	private Calendar date;
 	private boolean customTitle;
-	public static final int titleLength = 20;
+	public static final int titleLength = 20, maxDefaultTitleLength = 50;
     private static final long serialVersionUID = 7526471155622776147L;
 	
 	public Note(String text) {
@@ -50,11 +50,12 @@ public class Note implements Serializable{
     }
     
     private void setTitle() {
-    	if(this.text.length() < titleLength) {
+
+    	if(this.text.length() < maxDefaultTitleLength) {
     		this.title = this.text;
     	}
     	else {
-    		this.title = this.text.substring(0, titleLength) + "...";
+    		this.title = this.text.substring(0, maxDefaultTitleLength) + "...";
     	}
     	if(this.title.contains("\n")) {
     		this.title = this.title.substring(0, this.title.indexOf('\n'));
