@@ -33,7 +33,7 @@ public class NoteHubActivity extends ListActivity {
 	private ArrayAdapter<Note> adapter;
 	private ListView list;
 	private List<Note> noteList;
-	private Button searchButton;
+	private Button newNoteButton, searchButton;
     private EditText inputSearch;
     private TextView title;
     private boolean searchBarVisible;
@@ -58,6 +58,7 @@ public class NoteHubActivity extends ListActivity {
 	private void initLayout() {
 		this.list = getListView();
 		this.searchButton = (Button)findViewById(R.id.searchButton);
+		this.newNoteButton = (Button)findViewById(R.id.newNoteButton);
 		this.inputSearch = (EditText) findViewById(R.id.inputSearch);
 		this.title = (TextView)findViewById(R.id.NoteHubTitle);
 		
@@ -107,6 +108,11 @@ public class NoteHubActivity extends ListActivity {
 				    inputSearch.requestFocus();
 					searchBarVisible = true;
 				}
+			}
+		});
+	    this.newNoteButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				goToNewNote();
 			}
 		});
 	    

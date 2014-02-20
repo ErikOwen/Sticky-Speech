@@ -11,7 +11,7 @@ public class NoteDB {
 	static final String dbFile = "memoData/memoData.txt";
 	
 	public static void addNote(Note msg) {
-		noteList.add(msg);
+		noteList.add(0, msg);
 	}
 	
 	public static void deleteNote(int position) {
