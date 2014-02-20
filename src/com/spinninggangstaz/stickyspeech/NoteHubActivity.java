@@ -151,6 +151,7 @@ public class NoteHubActivity extends ListActivity {
 		 editNoteActivity.putExtra("noteIndex", position);
 			
 		 startActivityForResult(editNoteActivity, 1);
+		 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 		 
      }
 	 
@@ -167,6 +168,7 @@ public class NoteHubActivity extends ListActivity {
 	protected void goToNewNote() {
 	    Intent startNewNoteActivity = new Intent(NoteHubActivity.this, TakeNote.class);
 		startActivity(startNewNoteActivity);
+		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 	 }
 
     private class NoteAdapter extends ArrayAdapter<Note> {

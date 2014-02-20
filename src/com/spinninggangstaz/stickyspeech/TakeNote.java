@@ -134,6 +134,7 @@ public class TakeNote extends Activity {
 				
 				Intent startNoteHubActivity = new Intent(TakeNote.this, NoteHubActivity.class);
 				startActivity(startNoteHubActivity);
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 			}
 		});
 	}
@@ -164,6 +165,7 @@ public class TakeNote extends Activity {
     protected void gotoNoteHub() {
     	Intent startNoteHubActivity = new Intent(TakeNote.this, NoteHubActivity.class);
 		startActivity(startNoteHubActivity);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
 }
