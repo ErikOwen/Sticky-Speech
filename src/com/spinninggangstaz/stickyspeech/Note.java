@@ -52,6 +52,9 @@ public class Note implements Serializable{
     	else {
     		this.title = this.text.substring(0, titleLength) + "...";
     	}
+    	if(this.title.contains("\n")) {
+    		this.title = this.title.substring(0, this.title.indexOf('\n'));
+    	}
     }
     
     public String getTitle() {

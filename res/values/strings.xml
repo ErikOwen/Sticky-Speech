@@ -13,5 +13,8 @@
     <string name="searchBar">Search Stickies…</string>
     <string name="yesOption">Yes</string>
     <string name="noOption">No</string>
+    <string name="newNote">New Note</string>
+    <string name="myNotes">My Notes</string>
+    <string name="editNoteTitle">Edit Note</string>
 
 </resources>

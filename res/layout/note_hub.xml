@@ -25,9 +25,9 @@
 			    android:id="@+id/NoteHubTitle"
 			    android:layout_height="wrap_content"
 			    android:layout_width="0dp"
-			    android:text="@string/stickySpeech"
-			    android:textSize="30sp"
-			    android:layout_gravity="center"
+			    android:text="@string/myNotes"
+			    android:textSize="40sp"
+			    android:gravity="center"
 			    android:textColor="@color/white"
 			    android:layout_weight=".65" />
 
@@ -65,5 +65,20 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
         </ListView>
+        
+        <RelativeLayout 
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                 <TextView android:id="@android:id/empty"
+    				android:layout_width="match_parent"
+    				android:layout_height="match_parent"
+    				android:gravity="center"
+    				android:textColor="@color/white"
+    				android:textSize="25dp"
+    				android:textAlignment="center"
+    				android:text="You don't have any notes.\nSwipe left and make a new one!" />
+        </RelativeLayout>
+   
     
 </LinearLayout> 

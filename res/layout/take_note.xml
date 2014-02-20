@@ -34,9 +34,9 @@
 			    android:id="@+id/takeNoteTitle"
 			    android:layout_height="wrap_content"
 			    android:layout_width="0dp"
-			    android:text="@string/stickySpeech"
-			    android:textSize="30sp"
-			    android:layout_gravity="center"
+			    android:text="@string/newNote"
+			    android:textSize="40sp"
+			    android:gravity="center"
 			    android:textColor="@color/white"
 			    android:layout_weight=".55" />
     	    <Button 
