@@ -78,7 +78,7 @@ public class NoteHubActivity extends ListActivity {
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            // When user changed the Text
-	            NoteHubActivity.this.adapter.getFilter().filter(cs);   
+	            adapter.getFilter().filter(cs.toString());   
 	        }
 	         
 	        @Override
@@ -177,38 +177,5 @@ public class NoteHubActivity extends ListActivity {
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 	 }
 
-    private class NoteAdapter extends ArrayAdapter<Note> {
-        private List<Note> items;
-        private NoteDateFormatter dateFormatter = new HoursAgoDateFormatter();
 
-        public NoteAdapter(Context context, int textViewResourceId, List<Note> items) {
-            super(context, textViewResourceId, items);
-            this.items = items;
-        }
-        
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater inflaterService = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflaterService.inflate(R.layout.row, null);
-            }
-            
-            Note note = null;
-            if(position >= 0 && position < items.size()) {
-            	note = items.get(position);
-            }
-            if (note != null) {
-                TextView topText = (TextView)convertView.findViewById(R.id.toptext);
-                TextView bottomText = (TextView)convertView.findViewById(R.id.bottomtext);
-                if (topText != null) {
-                    topText.setText(note.getTitle());
-                }
-                if(bottomText != null){
-                    bottomText.setText(dateFormatter.getFormattedDate(note));
-                }
-            }
-                
-            return convertView;
-        }
-    }
 }
