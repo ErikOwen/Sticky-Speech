@@ -22,7 +22,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -30,6 +32,7 @@ import android.widget.TextView;
  */
 public class NoteHubActivity extends ListActivity {
 	
+	private LinearLayout rootView;
 	private NoteAdapter adapter;
 	private ListView list;
 	private List<Note> noteList;
@@ -56,6 +59,7 @@ public class NoteHubActivity extends ListActivity {
 	}
 	
 	private void initLayout() {
+		this.rootView = (LinearLayout)findViewById(R.id.noteHubRoot);
 		this.list = getListView();
 		this.searchButton = (Button)findViewById(R.id.searchButton);
 		this.newNoteButton = (Button)findViewById(R.id.newNoteButton);
@@ -70,6 +74,8 @@ public class NoteHubActivity extends ListActivity {
 		
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
 		this.list.setOnTouchListener(activitySwipeDetector);
+		this.rootView.setOnTouchListener(activitySwipeDetector);
+		
 	}
 	
 	private void initOnClickListeners() {
@@ -78,35 +84,38 @@ public class NoteHubActivity extends ListActivity {
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            // When user changed the Text
-	            adapter.getFilter().filter(cs.toString());   
+	        	if(!noteList.isEmpty()) {
+	        		adapter.getFilter().filter(cs.toString()); 
+	        	}
 	        }
-	         
-	        @Override
-	        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-	                int arg3) {
-	            // TODO Auto-generated method stub
-	             
-	        }
-	         
-	        @Override
-	        public void afterTextChanged(Editable arg0) {
-	            // TODO Auto-generated method stub                          
-	        }
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
 	    });
 	    
 	    this.searchButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				if(searchBarVisible) {
-					inputSearch.setVisibility(View.GONE);
-					inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-					searchBarVisible = false;
-				}
-				else {
+				if(!searchBarVisible) {
 					inputSearch.setVisibility(View.VISIBLE);
 				    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 				    inputSearch.requestFocus();
 					searchBarVisible = true;
+				}
+				else {
+					inputSearch.setVisibility(View.GONE);
+					inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+					searchBarVisible = false;
 				}
 			}
 		});
