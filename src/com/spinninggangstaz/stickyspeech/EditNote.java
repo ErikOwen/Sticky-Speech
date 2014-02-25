@@ -97,7 +97,9 @@ public class EditNote extends Activity {
 				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() { 
 				    @Override
 				    public void onClick(DialogInterface dialog, int which) {
-				        desiredTitle = input.getText().toString();
+				    	if(input.getText().toString().length() > 0) {
+				    		desiredTitle = input.getText().toString();
+				    	}
 				    }
 				});
 				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
