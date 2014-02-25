@@ -9,6 +9,7 @@
     <string name="editNote">Edit your message</string>
     <string name="title_activity_note_hub">NoteHub</string>
     <string name="saveTitle">Save</string>
+    <string name="cancelTitle">Cancel</string>
     <string name="backTitle">Back</string>
     <string name="searchBar">Search Stickies…</string>
     <string name="yesOption">Yes</string>

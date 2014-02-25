@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class EditNote extends Activity {
     private LinedEditText noteText;
     private Button backButton;
+    private Button cancelButton;
     private TextView title;
     private int noteIndex;
     private Note currentNote;
@@ -44,6 +45,7 @@ public class EditNote extends Activity {
     private void initLayout() {
     	setContentView(R.layout.edit_note);
     	this.backButton = (Button)findViewById(R.id.backButton);
+    	this.cancelButton = (Button)findViewById(R.id.cancelButton);
         this.noteText = (LinedEditText)findViewById(R.id.editText);
         this.title = (TextView)findViewById(R.id.editNoteTitle);
         this.noteText.setText(this.currentNote.toString(), TextView.BufferType.EDITABLE);
@@ -69,6 +71,12 @@ public class EditNote extends Activity {
 				finish();
 			}
 		});
+    	
+    	this.cancelButton.setOnClickListener(new OnClickListener() {
+    		public void onClick(View view) {
+				EditNote.this.returnWithoutSaving();
+    		}
+    	});
     }
     
     protected void returnWithoutSaving() {
