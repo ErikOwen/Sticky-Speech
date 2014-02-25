@@ -12,16 +12,23 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
-	private List<Note> items;
+	private List<Note> origItems;
+	private List<Note> fItems;
     private NoteDateFormatter dateFormatter = new HoursAgoDateFormatter();
     private Context context;
     
     public NoteAdapter(Context context, int textViewResourceId, List<Note> items) {
     	super(context, textViewResourceId, items);
-        this.items = items;
+        this.origItems = new ArrayList<Note>(items);
+        this.fItems = new ArrayList<Note>(items);
         this.context = context;
     }
-        
+    
+    public void resetDataSet(List<Note> items) {
+        this.origItems = new ArrayList<Note>(items);
+        this.fItems = new ArrayList<Note>(items);
+    }
+    
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
     	if (convertView == null) {
@@ -30,8 +37,8 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     	}
             
     	Note note = null;
-    	if(position >= 0 && position < items.size()) {
-    		note = items.get(position);
+    	if(position >= 0 && position < origItems.size()) {
+    		note = fItems.get(position);
     	}
     	if (note != null) {
     		TextView topText = (TextView)convertView.findViewById(R.id.toptext);
@@ -46,60 +53,68 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                 
     	return convertView;
 	}
-    
-//    @Override
-//    public int getCount()
-//    {
-//    	return items.size();
-//    }
 
-//    @Override
-//    public Filter getFilter() {
-//
-//        Filter filter = new Filter() {
-//
-//            @SuppressWarnings("unchecked")
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//            	List<Note> resultItems;
-//                resultItems = (List<Note>) results.values;
-//                notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//
-//                FilterResults results = new FilterResults();
-//                ArrayList<Note> FilteredArrayNames = new ArrayList<Note>();
-//
-//                // perform your search here using the searchConstraint String.
-//
-//                constraint = constraint.toString().toLowerCase();
-//                
-//                for(Note note : items) {
-//                	if(note.getTitle().toLowerCase().contains(constraint) ||
-//                			note.toString().toLowerCase().contains(constraint) ||
-//                			note.getDate().toString().contains(constraint)) {
-//                		FilteredArrayNames.add(note);
-//                	}
-//                }
-//                
-////                for (int i = 0; i < items.size(); i++) {
-////                    String dataNames = mDatabaseOfNames.get(i);
-////                    if (dataNames.toLowerCase().startsWith(constraint.toString()))  {
-////                        FilteredArrayNames.add(dataNames);
-////                    }
-////                }
-//
-//                results.count = FilteredArrayNames.size();
-//                results.values = FilteredArrayNames;
-//                //Log.e("VALUES", results.values.toString());
-//
-//                return results;
-//            }
-//        };
-//
-//        return filter;
-//    }
+    @Override
+    public int getPosition(Note note) {
+    	return origItems.indexOf(note);
+    }
+    
+    @Override
+    public Note getItem(int position) {
+    	return fItems.get(position);
+    }
+    
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+            	fItems = (ArrayList<Note>)results.values;
+            	notifyDataSetChanged();
+            	clear();
+            	for(int iter = 0; iter < fItems.size(); iter++) {
+            		add(fItems.get(iter));
+            		notifyDataSetInvalidated();
+            	}
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults results = new FilterResults();
+
+                // perform your search here using the searchConstraint String.
+
+                String prefix = constraint.toString().toLowerCase();
+                
+                if(prefix == null || prefix.length() == 0) {
+                    ArrayList<Note> list = new ArrayList<Note>(origItems);
+                    results.values = list;
+                    results.count = list.size();
+                }
+                else {
+                    final ArrayList<Note> list = new ArrayList<Note>(origItems);
+                    final ArrayList<Note> nList = new ArrayList<Note>();
+                    
+                    for(Note note : origItems) {
+                    	if(note.getTitle().toLowerCase().contains(prefix) ||
+                    			note.toString().toLowerCase().contains(prefix) ||
+                    			note.getDate().toString().contains(prefix)) {
+                    		nList.add(note);
+                    	}
+                    	results.values = nList;
+                        results.count = nList.size();
+                    }
+                }
+
+                return results;
+            }
+        };
+
+        return filter;
+    }
     
 }

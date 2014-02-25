@@ -30,7 +30,7 @@ import android.widget.TextView;
  */
 public class NoteHubActivity extends ListActivity {
 	
-	private ArrayAdapter<Note> adapter;
+	private NoteAdapter adapter;
 	private ListView list;
 	private List<Note> noteList;
 	private Button newNoteButton, searchButton;
@@ -140,6 +140,8 @@ public class NoteHubActivity extends ListActivity {
 	        	         NoteDB.saveNotes();
 	        	         noteList = NoteDB.getList();
 	        	         
+	        	         adapter.resetDataSet(noteList);
+	        	         
 	        	         adapter.notifyDataSetChanged();
 	        	 }});
 	        	 
@@ -154,7 +156,8 @@ public class NoteHubActivity extends ListActivity {
 		 super.onListItemClick(l, v, position, id);
 		 
 		 Intent editNoteActivity = new Intent(NoteHubActivity.this, EditNote.class);
-		 editNoteActivity.putExtra("noteIndex", position);
+		 //CHANGED
+		 editNoteActivity.putExtra("noteIndex", adapter.getPosition(adapter.getItem(position)));
 			
 		 startActivityForResult(editNoteActivity, 1);
 		 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
@@ -164,6 +167,7 @@ public class NoteHubActivity extends ListActivity {
 	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == 1) {
 			noteList = NoteDB.getList();
+			adapter.resetDataSet(noteList);
 			adapter.notifyDataSetChanged();
 		}
 		else if(requestCode == 1 && resultCode == 55) {
