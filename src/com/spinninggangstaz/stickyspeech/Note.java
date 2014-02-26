@@ -7,35 +7,32 @@ import java.util.GregorianCalendar;
 /**
  *  A sticky note
  */
-public class Note implements Serializable{
+public class Note implements Serializable
+{
 	private String title;
 	private String text;
 	private Calendar date;
-	private boolean customTitle;
-	public static final int titleLength = 20, maxDefaultTitleLength = 50;
     private static final long serialVersionUID = 7526471155622776147L;
 	
 	public Note(String text) {
-		this.text = text;
-		this.title = text;
-		this.customTitle = false;
+		this(text, new GregorianCalendar());
 	}
 	
 	public Note(String text, Calendar date) {
 		this.text = text;
-		this.setTitle();
 		this.date = date;
 	}
 	
 	public String toString() {
+		return getTitle() + getDate().toString();
+	}
+	
+	public String getText() {
 		return this.text;
 	}
 	
-	public void editText(String newText) {
+	public void setText(String newText) {
 		this.text = newText;
-		if(this.customTitle == false) {
-			setTitle();
-		}
 	}
 	
 	public void setDate(Calendar setDate) {
@@ -49,25 +46,14 @@ public class Note implements Serializable{
         return this.date;
     }
     
-    private void setTitle() {
-
-    	if(this.text.length() < maxDefaultTitleLength) {
-    		this.title = this.text;
-    	}
-    	else {
-    		this.title = this.text.substring(0, maxDefaultTitleLength) + "...";
-    	}
-    	if(this.title.contains("\n")) {
-    		this.title = this.title.substring(0, this.title.indexOf('\n'));
-    	}
-    }
-    
     public void setTitle(String titleString) {
     	this.title = titleString;
-    	this.customTitle = true;
     }
     
     public String getTitle() {
-    	return this.title;
+    	if (this.title == null || this.title.length() == 0)
+    		return this.text;
+    	else
+    		return title;
     }
 }

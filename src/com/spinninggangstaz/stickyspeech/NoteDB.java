@@ -20,7 +20,7 @@ public class NoteDB {
 	
 	public static void editNoteText(int index, String str)
 	{
-		noteList.get(index).editText(str);
+		noteList.get(index).setText(str);
 	}
 	
 	public static void editNoteTitle(int index, String title)

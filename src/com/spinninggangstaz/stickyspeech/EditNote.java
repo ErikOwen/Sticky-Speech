@@ -53,7 +53,7 @@ public class EditNote extends Activity {
     	this.newTitleButton = (Button)findViewById(R.id.titleButton);
         this.noteText = (LinedEditText)findViewById(R.id.editText);
         this.title = (TextView)findViewById(R.id.editNote);
-        this.noteText.setText(this.currentNote.toString(), TextView.BufferType.EDITABLE);
+        this.noteText.setText(this.currentNote.getText(), TextView.BufferType.EDITABLE);
         this.noteText.setSelection(this.currentNote.toString().length());
         
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
@@ -89,7 +89,6 @@ public class EditNote extends Activity {
 				// Set up the input
 				final EditText input = new EditText(EditNote.this);
 				input.setHint(currentNote.getTitle());
-				input.setFilters( new InputFilter[] { new InputFilter.LengthFilter(Note.titleLength) } ); 
 				// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 				input.setInputType(InputType.TYPE_CLASS_TEXT);
 				builder.setView(input);
