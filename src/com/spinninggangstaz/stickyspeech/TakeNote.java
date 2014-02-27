@@ -16,7 +16,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -30,39 +29,36 @@ public class TakeNote extends Activity {
 	private static final int REQUEST_CODE = 1234;
 	private TextView title;
 	private boolean hasNewNote;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
+
 		this.hasNewNote = false;
-		
+
 		initLayout();
 		initOnClickListeners();
 	}
-	
+
 	private void initLayout() {
 		setContentView(R.layout.take_note);
-		
+
 		this.rootView = (RelativeLayout)findViewById(R.id.takeNoteRootView);
 		this.title = (TextView)findViewById(R.id.takeNoteTitle);
 		this.microphoneView = (RelativeLayout)findViewById(R.id.microphoneLayout);
 		this.saveButton = (Button)findViewById(R.id.saveButton);
-		this.textField = (LinedEditText)findViewById(R.id.noteTextBox);
+		this.textField = (LinedEditText)findViewById(R.id.newNoteTextBox);
 		this.microphone = (ToggleButton)findViewById(R.id.toggleMicrophone);
-		
+
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
-		//this.saveButton.setTypeface(font);
-		
-		//this.saveButton.setText("My Notes");
 	}
-	
+
 	private void initOnClickListeners() {
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
 		textField.setOnTouchListener(activitySwipeDetector);
-		
+
 		this.rootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		    @Override
 		    public void onGlobalLayout() {
@@ -75,7 +71,7 @@ public class TakeNote extends Activity {
 		        }
 		     }
 		});
-		
+
 		this.microphone.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -85,9 +81,9 @@ public class TakeNote extends Activity {
 			    startActivityForResult(intent, REQUEST_CODE);
 			}
 		});
-		
+
 	    this.textField.addTextChangedListener(new TextWatcher() {
-	        
+
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            if(cs.length() > 0) {
@@ -105,17 +101,17 @@ public class TakeNote extends Activity {
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				
-				
+
+
 			}
 	    });
-		
+
 		this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if(hasNewNote) {
@@ -126,14 +122,14 @@ public class TakeNote extends Activity {
 					NoteDB.addNote(curNote);
 					NoteDB.saveNotes();
 				}
-				
+
 				Intent startNoteHubActivity = new Intent(TakeNote.this, NoteHubActivity.class);
 				startActivity(startNoteHubActivity);
 				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 			}
 		});
 	}
-	
+
     /**
      * Handle the results from the voice recognition activity.
      */
