@@ -2,13 +2,13 @@ package com.spinninggangstaz.stickyspeech;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
@@ -44,7 +44,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     		TextView topText = (TextView)convertView.findViewById(R.id.toptext);
     		TextView bottomText = (TextView)convertView.findViewById(R.id.bottomtext);
     		if (topText != null) {
-    			topText.setText(note.getTitle());
+    			topText.setText(formatTitle(note.getTitle()));
     		}
     		if(bottomText != null){
     			bottomText.setText(dateFormatter.getFormattedDate(note));
@@ -54,7 +54,22 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     	return convertView;
 	}
 
-    @Override
+    private String formatTitle(String title) {
+    	final int maxTitleLength = 50;
+    	
+    	if(title.contains("\n")) {
+    		title = title.substring(0, title.indexOf('\n'));
+    	}
+    	
+    	if(title.length() < maxTitleLength) {
+    		return title;
+    	}
+    	else {
+    		return title.substring(0, maxTitleLength) + "...";
+    	}
+	}
+
+	@Override
     public int getPosition(Note note) {
     	return origItems.indexOf(note);
     }
@@ -101,7 +116,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                     
                     for(Note note : origItems) {
                     	if(note.getTitle().toLowerCase().contains(prefix) ||
-                    			note.toString().toLowerCase().contains(prefix) ||
+                    			note.getText().toLowerCase().contains(prefix) ||
                     			note.getDate().toString().contains(prefix)) {
                     		nList.add(note);
                     	}
