@@ -32,7 +32,7 @@ public class ActivitySwipeDetector implements View.OnTouchListener {
 	    	((NoteHubActivity)activity).goToNewNote();
 	    }
 	    else if(activity instanceof EditNote) {
-	    	((EditNote)activity).returnWithoutSaving();
+	    	((EditNote)activity).returnAndSave();
 	    }
 	}
 	

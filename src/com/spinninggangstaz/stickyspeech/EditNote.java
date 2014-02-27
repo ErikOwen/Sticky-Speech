@@ -68,16 +68,7 @@ public class EditNote extends Activity {
 		
     	this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				NoteDB.editNoteText(noteIndex, noteText.getText().toString());
-				if(desiredTitle != null) {
-					NoteDB.editNoteTitle(noteIndex, desiredTitle);
-				}
-				NoteDB.saveNotes();
-				
-				Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
-				setResult(1, returnToNoteHubActivity);
-				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-				finish();
+				returnAndSave();
 			}
 		});
     	
@@ -113,9 +104,15 @@ public class EditNote extends Activity {
 		});
     }
     
-    protected void returnWithoutSaving() {
+    protected void returnAndSave() {
+		NoteDB.editNoteText(noteIndex, noteText.getText().toString());
+		if(desiredTitle != null) {
+			NoteDB.editNoteTitle(noteIndex, desiredTitle);
+		}
+		NoteDB.saveNotes();
+		
 		Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
-		setResult(55, returnToNoteHubActivity);
+		setResult(1, returnToNoteHubActivity);
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 		finish();
     }
