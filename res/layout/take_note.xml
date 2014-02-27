@@ -38,18 +38,20 @@
 			    android:textSize="40sp"
 			    android:gravity="center"
 			    android:textColor="@color/white"
-			    android:layout_weight=".55" />
-    	    <Button 
-    	        android:id="@+id/saveButton"
-    	        android:layout_width="0dp"
-    	        android:layout_height="wrap_content"
-    	        android:layout_weight=".25"
-    	        android:layout_gravity="left|center_vertical"
-    	        android:paddingRight="20sp"
-    	        android:text="@string/saveTitle"
-    	        android:textColor="@color/black"
-    	        android:background="@drawable/save_background_selector"
-    	        android:textSize="17sp"/>
+			    android:layout_weight=".6" />
+		<RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2" >
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/next_arrow_selector" />
+        </RelativeLayout>
+
     	</LinearLayout>
     	<com.spinninggangstaz.stickyspeech.LinedEditText
     	    android:id="@+id/noteTextBox"

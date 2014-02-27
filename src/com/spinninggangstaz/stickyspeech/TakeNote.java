@@ -61,9 +61,9 @@ public class TakeNote extends Activity {
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
-		this.saveButton.setTypeface(font);
+		//this.saveButton.setTypeface(font);
 		
-		this.saveButton.setText("My Notes");
+		//this.saveButton.setText("My Notes");
 	}
 	
 	private void initOnClickListeners() {
@@ -98,11 +98,13 @@ public class TakeNote extends Activity {
 	        @Override
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            if(cs.length() > 0) {
-	            	saveButton.setText("Save Note");
+	            	//saveButton.setText("Save Note");
+	            	saveButton.setBackgroundResource(R.drawable.save_icon_selector);
 	            	hasNewNote = true;
 	            }
 	            else {
-	            	saveButton.setText("My Notes");
+	            	//saveButton.setText("My Notes");
+	            	saveButton.setBackgroundResource(R.drawable.next_arrow_selector);
 	            	hasNewNote = false;
 	            }
 	        }
