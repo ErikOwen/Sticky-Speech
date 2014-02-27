@@ -54,7 +54,7 @@ public class EditNote extends Activity {
         this.noteText = (LinedEditText)findViewById(R.id.editText);
         this.title = (TextView)findViewById(R.id.editNote);
         this.noteText.setText(this.currentNote.getText(), TextView.BufferType.EDITABLE);
-        this.noteText.setSelection(this.currentNote.toString().length());
+        this.noteText.setSelection(this.currentNote.getText().length());
         
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
