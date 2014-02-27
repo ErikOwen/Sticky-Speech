@@ -28,6 +28,7 @@ public class EditNote extends Activity {
     private int noteIndex;
     private Note currentNote;
     private String desiredTitle;
+    private static final String savedText = "editTextSavedText";
 
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -41,7 +42,17 @@ public class EditNote extends Activity {
 		
         initLayout();
         initListeners();
+        
+		if(savedInstanceState != null) {
+			this.noteText.setText(savedInstanceState.getString(EditNote.savedText));
+		}
     }
+    
+	@Override
+	protected void onSaveInstanceState(Bundle extra) {
+		super.onSaveInstanceState(extra);
+		extra.putString(EditNote.savedText, noteText.getText().toString());
+	}
 
     /**
      * Lays out the gui.  Need to implement so it populates with an
