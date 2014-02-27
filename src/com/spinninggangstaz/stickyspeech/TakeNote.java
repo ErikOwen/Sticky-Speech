@@ -27,6 +27,7 @@ public class TakeNote extends Activity {
 	private LinedEditText textField;
 	private ToggleButton microphone;
 	private static final int REQUEST_CODE = 1234;
+	private static final String savedText = "savedTextKey", hasNewNoteKey = "hasNewNote";
 	private TextView title;
 	private boolean hasNewNote;
 
@@ -36,11 +37,23 @@ public class TakeNote extends Activity {
 		super.onCreate(savedInstanceState);
 
 		this.hasNewNote = false;
-
+		
 		initLayout();
 		initOnClickListeners();
+		
+		if(savedInstanceState != null) {
+			this.textField.setText(savedInstanceState.getString(TakeNote.savedText));
+			this.hasNewNote = savedInstanceState.getBoolean("hasNewNote");
+		}
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle extra) {
+		super.onSaveInstanceState(extra);
+		extra.putString(TakeNote.savedText, textField.getText().toString());
+		extra.putBoolean(TakeNote.hasNewNoteKey, this.hasNewNote);
+	}
+	
 	private void initLayout() {
 		setContentView(R.layout.take_note);
 
