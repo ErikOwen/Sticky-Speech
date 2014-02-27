@@ -16,6 +16,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -39,12 +40,6 @@ public class TakeNote extends Activity {
 		
 		initLayout();
 		initOnClickListeners();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		this.textField.setText("");
 	}
 	
 	private void initLayout() {
@@ -86,7 +81,7 @@ public class TakeNote extends Activity {
 				Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 			    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+			    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Record Your Note...");
 			    startActivityForResult(intent, REQUEST_CODE);
 			}
 		});
@@ -144,7 +139,7 @@ public class TakeNote extends Activity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    {	
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
         {
             // Populate the wordsList with the String values the recognition engine thought it heard
@@ -155,8 +150,10 @@ public class TakeNote extends Activity {
             int cursorSpot = textField.getSelectionStart();
             String beforeCurs = this.textField.getText().toString().substring(0, cursorSpot);
             String afterCurs = this.textField.getText().toString().substring(cursorSpot);
+            this.textField.getText().clear();
             this.textField.setText(beforeCurs + voiceInput + afterCurs);
-            this.textField.setSelection(cursorSpot);
+            this.textField.setSelection(cursorSpot + voiceInput.length());
+            Log.w("stickyspeech", "Text field text: " + textField.getText().toString());
         }
         
         super.onActivityResult(requestCode, resultCode, data);
