@@ -27,33 +27,33 @@ import android.widget.TextView;
  * The view of the app's list of notes 
  */
 public class NoteHubActivity extends ListActivity {
-	
+
 	private LinearLayout rootView;
 	private NoteAdapter adapter;
 	private ListView list;
 	private List<Note> noteList;
 	private Button newNoteButton, searchButton;
-    private EditText inputSearch;
-    private TextView title;
-    private boolean searchBarVisible;
-	
+	private EditText inputSearch;
+	private TextView title;
+	private boolean searchBarVisible;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.note_hub);
-		
+
 		initLayout();
 		initOnClickListeners();
-		
+
 		NoteDB.loadNotes();
 		noteList = NoteDB.getList();
-	    adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
-	    
-	    list.setAdapter(adapter);
-		
+		adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
+
+		list.setAdapter(adapter);
+
 	}
-	
+
 	private void initLayout() {
 		this.rootView = (LinearLayout)findViewById(R.id.noteHubRoot);
 		this.list = getListView();
@@ -61,51 +61,52 @@ public class NoteHubActivity extends ListActivity {
 		this.newNoteButton = (Button)findViewById(R.id.newNoteButton);
 		this.inputSearch = (EditText) findViewById(R.id.inputSearch);
 		this.title = (TextView)findViewById(R.id.NoteHubTitle);
-		
+
 		this.searchBarVisible = false;
 		this.inputSearch.setVisibility(View.GONE);
-		
+
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
-		
+
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
 		this.list.setOnTouchListener(activitySwipeDetector);
 		this.rootView.setOnTouchListener(activitySwipeDetector);
-		
+
 	}
-	
+
 	private void initOnClickListeners() {
-	    this.inputSearch.addTextChangedListener(new TextWatcher() {
-	        
-	        @Override
-	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-	            // When user changed the Text
-	        	if(!noteList.isEmpty()) {
-	        		adapter.getFilter().filter(cs.toString());
-	        	}
-	        }
+		this.inputSearch.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+				// When user changed the Text
+				if(!noteList.isEmpty()) {
+					adapter.getFilter().filter(cs.toString());
+				}
+			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
-				
+
 			}
-	    });
-	    
-	    this.searchButton.setOnClickListener(new OnClickListener() {
+		});
+
+		this.searchButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				if(!searchBarVisible) {
 					inputSearch.setVisibility(View.VISIBLE);
-				    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-				    inputSearch.requestFocus();
+					inputSearch.getText().clear();
+					inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+					inputSearch.requestFocus();
 					searchBarVisible = true;
 				}
 				else {
@@ -115,61 +116,64 @@ public class NoteHubActivity extends ListActivity {
 				}
 			}
 		});
-	    this.newNoteButton.setOnClickListener(new OnClickListener() {
+		this.newNoteButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				goToNewNote();
 			}
 		});
-	    
-	    this.getListView().setLongClickable(true);
-	    this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-	         public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
-	        	 AlertDialog.Builder aBuilder = new AlertDialog.Builder(NoteHubActivity.this);
-	        	 aBuilder.setTitle("Delete Note Confirmation");
-	        	 aBuilder.setMessage("Do you really want to delete \"" + adapter.getItem(position).getTitle() + "\"?");
-	        	 aBuilder.setCancelable(false);
-	        	 aBuilder.setIcon(R.drawable.delete_icon);
-	        	 /*.setIcon(android.R.drawable.ic_dialog_alert)*/
-	        	 aBuilder.setNegativeButton(getResources().getString(R.string.noOption), new DialogInterface.OnClickListener() {
 
-		        	     public void onClick(DialogInterface dialog, int whichButton) {
-		        	    	 
-		         }});
-	        	 
-	        	 aBuilder.setPositiveButton(getResources().getString(R.string.yesOption), new DialogInterface.OnClickListener() {
+		this.getListView().setLongClickable(true);
+		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+				AlertDialog.Builder aBuilder = new AlertDialog.Builder(NoteHubActivity.this);
+				aBuilder.setTitle("Delete Note Confirmation");
+				aBuilder.setMessage("Do you really want to delete \"" + adapter.getItem(position).getTitle() + "\"?");
+				aBuilder.setCancelable(false);
+				aBuilder.setIcon(R.drawable.delete_icon);
+				/*.setIcon(android.R.drawable.ic_dialog_alert)*/
+				aBuilder.setNegativeButton(getResources().getString(R.string.noOption), new DialogInterface.OnClickListener() {
 
-	        	     public void onClick(DialogInterface dialog, int whichButton) {
-	        	         //noteList.remove(position);
-	        	         NoteDB.loadNotes();
-	        	         NoteDB.deleteNote(position);
-	        	         NoteDB.saveNotes();
-	        	         noteList = NoteDB.getList();
-	        	         
-	        	         adapter.resetDataSet(noteList);
-	        	         
-	        	         adapter.notifyDataSetChanged();
-	        	 }});
-	        	 
-	        	 aBuilder.show();
-	             return true;
-	         }
-	     });
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}});
+
+				aBuilder.setPositiveButton(getResources().getString(R.string.yesOption), new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int whichButton) {
+						//noteList.remove(position);
+						NoteDB.loadNotes();
+						NoteDB.deleteNote(position);
+						NoteDB.saveNotes();
+						noteList = NoteDB.getList();
+
+						adapter.resetDataSet(noteList);
+
+						adapter.notifyDataSetChanged();
+					}});
+
+				aBuilder.show();
+				return true;
+			}
+		});
 	}
-	
-	 @Override
-     protected void onListItemClick(ListView l, View v, int position, long id) {
-		 super.onListItemClick(l, v, position, id);
-		 
-		 Intent editNoteActivity = new Intent(NoteHubActivity.this, EditNote.class);
-		 //CHANGED
-		 editNoteActivity.putExtra("noteIndex", adapter.getPosition(adapter.getItem(position)));
-			
-		 startActivityForResult(editNoteActivity, 1);
-		 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-		 
-     }
-	 
-	 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		Intent editNoteActivity = new Intent(NoteHubActivity.this, EditNote.class);
+		editNoteActivity.putExtra("noteIndex", adapter.getPosition(adapter.getItem(position)));
+
+		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputSearch.setVisibility(View.GONE);
+		inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+		
+		startActivityForResult(editNoteActivity, 1);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == 1) {
 			noteList = NoteDB.getList();
 			adapter.resetDataSet(noteList);
@@ -179,12 +183,17 @@ public class NoteHubActivity extends ListActivity {
 			Log.w("StickySpeech", "Returned without saving anything");
 		}
 	}
-	
+
 	protected void goToNewNote() {
-	    Intent startNewNoteActivity = new Intent(NoteHubActivity.this, TakeNote.class);
+		Intent startNewNoteActivity = new Intent(NoteHubActivity.this, TakeNote.class);
+		
+		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputSearch.setVisibility(View.GONE);
+		inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+		
 		startActivity(startNewNoteActivity);
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-	 }
+	}
 
 
 }
