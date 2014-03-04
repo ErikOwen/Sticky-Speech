@@ -81,7 +81,7 @@ public class NoteHubActivity extends ListActivity {
 	        public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 	            // When user changed the Text
 	        	if(!noteList.isEmpty()) {
-	        		adapter.getFilter().filter(cs.toString()); 
+	        		adapter.getFilter().filter(cs.toString());
 	        	}
 	        }
 
@@ -101,7 +101,7 @@ public class NoteHubActivity extends ListActivity {
 	    
 	    this.searchButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				if(!searchBarVisible) {
 					inputSearch.setVisibility(View.VISIBLE);
 				    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);

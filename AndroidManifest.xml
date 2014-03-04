@@ -27,14 +27,15 @@
         
         <activity
             android:name="com.spinninggangstaz.stickyspeech.TakeNote"
-            android:label="@string/app_name" >
-            <intent-filter>
+            android:label="@string/app_name" />
+        <activity
+            android:name=".NoteHubActivity" android:label="NoteHubActivity">
+			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NoteHubActivity" android:label="NoteHubActivity"/>
         <activity android:name=".EditNote" android:label="EditNote"/>
     </application>
 
