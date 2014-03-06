@@ -188,6 +188,13 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 			adapter.notifyDataSetChanged();
 	    }
 	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		this.inputSearch.setVisibility(View.GONE);
+		super.onBackPressed();
+	}
 
 
 }

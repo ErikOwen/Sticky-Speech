@@ -26,10 +26,10 @@
         <uses-library android:name="android.test.runner" />
         
         <activity
-            android:name="com.spinninggangstaz.stickyspeech.TakeNote"
-            android:label="@string/app_name" />
+            android:name="com.spinninggangstaz.stickyspeech.TakeNote" />
         <activity
-            android:name=".NoteHubActivity" android:label="NoteHubActivity">
+            android:name=".NoteHubActivity"
+            android:label="@string/app_name">
 			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

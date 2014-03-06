@@ -6,3 +6,4 @@ project.properties
 res/drawable-hdpi/.DS_Store
 .settings
 .idea/
+lint.xml
