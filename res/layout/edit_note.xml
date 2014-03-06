@@ -1,26 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/takeNoteRootView"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/takeNoteRootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context=".TakeNote" >
-    
-<!--      <LinearLayout
-    	android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	android:orientation="vertical"
-    	android:weightSum="1" > -->
-    	<LinearLayout
-    	    android:id="@+id/titleLayout"
-    		android:layout_width="match_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="horizontal"
-    		android:weightSum="1"
-    		android:background="@color/black">
-		<RelativeLayout
+
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".2" >
@@ -33,39 +29,38 @@
                 android:background="@drawable/back_arrow_selector" />
         </RelativeLayout>
 
-			<TextView 
-			    android:id="@+id/editNote"
-			    android:layout_height="wrap_content"
-			    android:layout_width="0dp"
-			    android:text="@string/editNoteTitle"
-			    android:textSize="40sp"
-			    android:gravity="center"
-			    android:textColor="@color/white"
-			    android:layout_weight=".60" />
-			<RelativeLayout 
-			    android:layout_width="0dp"
-    		    android:layout_height="wrap_content"
-    		    android:layout_weight=".2">
-			    <Button 
-    	        	android:id="@+id/titleButton"
-    	        	android:layout_width="45dp"
-    	        	android:layout_height="45dp"
-    	        	android:layout_centerInParent="true"
-    	        	android:background="@drawable/title_icon_selector"/>
-			</RelativeLayout>
+        <TextView
+            android:id="@+id/editNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".60"
+            android:gravity="center"
+            android:text="@string/editNoteTitle"
+            android:textColor="@color/white" 
+			android:textSize="40sp"/>
 
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2" >
 
+            <Button
+                android:id="@+id/titleButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/title_icon_selector" />
+        </RelativeLayout>
+    </LinearLayout>
 
-    	</LinearLayout>
-    	<com.spinninggangstaz.stickyspeech.LinedEditText
-    	    android:id="@+id/editText"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/titleLayout"
-            android:gravity="top"
-            android:textSize="30sp"
-            android:background="@color/yellow"
-            android:hint="@string/noteHint" />
-<!--     </LinearLayout> -->
+    <com.spinninggangstaz.stickyspeech.LinedEditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleLayout"
+        android:background="@color/yellow"
+        android:gravity="top"
+        android:hint="@string/noteHint"
+        android:textSize="30sp" />
 
 </RelativeLayout>

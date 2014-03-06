@@ -11,17 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-public class NoteAdapter extends ArrayAdapter<Note> {
+public class NoteAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<Note> {
 	private List<Note> origItems;
 	private List<Note> fItems;
 	private NoteDateFormatter dateFormatter = new HoursAgoDateFormatter();
 	private Context context;
 
 	public NoteAdapter(Context context, int textViewResourceId, List<Note> items) {
-		super(context, textViewResourceId, items);
+		//super(context, textViewResourceId, items);
+		super(items);
 		this.origItems = new ArrayList<Note>(items);
 		this.fItems = new ArrayList<Note>(items);
 		this.context = context;
+		
 	}
 
 	public void resetDataSet(List<Note> items) {
@@ -69,17 +71,17 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 		}
 	}
 
-	@Override
+	//@Override
 	public int getPosition(Note note) {
 		return origItems.indexOf(note);
 	}
 
-	@Override
+	//@Override
 	public Note getItem(int position) {
 		return fItems.get(position);
 	}
 
-	@Override
+	//@Override
 	public Filter getFilter() {
 
 		Filter filter = new Filter() {

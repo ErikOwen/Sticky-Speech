@@ -1,6 +1,11 @@
 package com.spinninggangstaz.stickyspeech;
 
 import java.util.List;
+
+import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
+
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -15,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
@@ -26,7 +32,7 @@ import android.widget.TextView;
 /**
  * The view of the app's list of notes 
  */
-public class NoteHubActivity extends ListActivity {
+public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 
 	private LinearLayout rootView;
 	private NoteAdapter adapter;
@@ -50,7 +56,14 @@ public class NoteHubActivity extends ListActivity {
 		noteList = NoteDB.getList();
 		adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
 
-		list.setAdapter(adapter);
+		//list.setAdapter(adapter);
+		
+	    SwingRightInAnimationAdapter swingRightInAnimationAdapter = new SwingRightInAnimationAdapter(adapter);
+	    SwipeDismissAdapter swipeDismissAdapter = new SwipeDismissAdapter(swingRightInAnimationAdapter, this);
+	    
+	    // Assign the ListView to the AnimationAdapter and vice versa
+	    swipeDismissAdapter.setAbsListView(getListView());
+	    list.setAdapter(swipeDismissAdapter);
 
 	}
 
@@ -69,8 +82,8 @@ public class NoteHubActivity extends ListActivity {
 		this.title.setTypeface(font);
 
 		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		this.list.setOnTouchListener(activitySwipeDetector);
-		this.rootView.setOnTouchListener(activitySwipeDetector);
+		//this.list.setOnTouchListener(activitySwipeDetector);
+		//this.rootView.setOnTouchListener(activitySwipeDetector);
 
 	}
 
@@ -123,38 +136,6 @@ public class NoteHubActivity extends ListActivity {
 		});
 
 		this.getListView().setLongClickable(true);
-		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
-				AlertDialog.Builder aBuilder = new AlertDialog.Builder(NoteHubActivity.this);
-				aBuilder.setTitle("Delete Note Confirmation");
-				aBuilder.setMessage("Do you really want to delete \"" + adapter.getItem(position).getTitle() + "\"?");
-				aBuilder.setCancelable(false);
-				aBuilder.setIcon(R.drawable.delete_icon);
-				/*.setIcon(android.R.drawable.ic_dialog_alert)*/
-				aBuilder.setNegativeButton(getResources().getString(R.string.noOption), new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int whichButton) {
-
-					}});
-
-				aBuilder.setPositiveButton(getResources().getString(R.string.yesOption), new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int whichButton) {
-						//noteList.remove(position);
-						NoteDB.loadNotes();
-						NoteDB.deleteNote(position);
-						NoteDB.saveNotes();
-						noteList = NoteDB.getList();
-
-						adapter.resetDataSet(noteList);
-
-						adapter.notifyDataSetChanged();
-					}});
-
-				aBuilder.show();
-				return true;
-			}
-		});
 	}
 
 	@Override
@@ -193,6 +174,19 @@ public class NoteHubActivity extends ListActivity {
 		
 		startActivity(startNewNoteActivity);
 		overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+	}
+
+	@Override
+	public void onDismiss(AbsListView arg0, int[] reverseSortedPositions) {
+	    for (int position : reverseSortedPositions) {
+			NoteDB.loadNotes();
+			NoteDB.deleteNote(position);
+			NoteDB.saveNotes();
+			noteList = NoteDB.getList();
+
+			adapter.resetDataSet(noteList);
+			adapter.notifyDataSetChanged();
+	    }
 	}
 
 
