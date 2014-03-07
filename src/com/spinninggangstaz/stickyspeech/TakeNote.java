@@ -69,9 +69,6 @@ public class TakeNote extends Activity {
 	}
 
 	private void initOnClickListeners() {
-		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		textField.setOnTouchListener(activitySwipeDetector);
-
 		this.rootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 		    @Override
 		    public void onGlobalLayout() {
@@ -112,10 +109,7 @@ public class TakeNote extends Activity {
 	        }
 
 			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-
-			}
+			public void afterTextChanged(Editable s) { }
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,

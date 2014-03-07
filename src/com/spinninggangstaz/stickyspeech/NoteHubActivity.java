@@ -2,39 +2,36 @@ package com.spinninggangstaz.stickyspeech;
 
 import java.util.List;
 
-import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
-
-import android.os.Bundle;
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.contextualundo.ContextualUndoAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.contextualundo.ContextualUndoAdapter.DeleteItemCallback;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
+
 /**
  * The view of the app's list of notes 
  */
-public class NoteHubActivity extends ListActivity implements OnDismissCallback {
-
-	private LinearLayout rootView;
+public class NoteHubActivity extends ListActivity implements DeleteItemCallback
+{
 	private NoteAdapter adapter;
 	private ListView list;
 	private List<Note> noteList;
@@ -42,6 +39,7 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 	private EditText inputSearch;
 	private TextView title;
 	private boolean searchBarVisible;
+	private LinearLayout rootView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +52,13 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 
 		NoteDB.loadNotes();
 		noteList = NoteDB.getList();
-		adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
-
-		//list.setAdapter(adapter);
 		
-	    SwingRightInAnimationAdapter swingRightInAnimationAdapter = new SwingRightInAnimationAdapter(adapter);
-	    SwipeDismissAdapter swipeDismissAdapter = new SwipeDismissAdapter(swingRightInAnimationAdapter, this);
+		adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
+	    ContextualUndoAdapter contextualUndoAdapter = new ContextualUndoAdapter(adapter,
+	    		R.layout.undo_row, R.id.undo_row_undobutton, this);
 	    
-	    // Assign the ListView to the AnimationAdapter and vice versa
-	    swipeDismissAdapter.setAbsListView(getListView());
-	    list.setAdapter(swipeDismissAdapter);
-
+	    contextualUndoAdapter.setAbsListView(getListView());
+	    list.setAdapter(contextualUndoAdapter);
 	}
 
 	private void initLayout() {
@@ -80,11 +74,6 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.title.setTypeface(font);
-
-		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		//this.list.setOnTouchListener(activitySwipeDetector);
-		//this.rootView.setOnTouchListener(activitySwipeDetector);
-
 	}
 
 	private void initOnClickListeners() {
@@ -92,24 +81,16 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 
 			@Override
 			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-				// When user changed the Text
 				if(!noteList.isEmpty()) {
 					adapter.getFilter().filter(cs.toString());
 				}
 			}
 
 			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-
-			}
+			public void afterTextChanged(Editable s) { }
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-
-			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 		});
 
 		this.searchButton.setOnClickListener(new OnClickListener() {
@@ -177,16 +158,18 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 	}
 
 	@Override
-	public void onDismiss(AbsListView arg0, int[] reverseSortedPositions) {
-	    for (int position : reverseSortedPositions) {
-			NoteDB.loadNotes();
-			NoteDB.deleteNote(position);
-			NoteDB.saveNotes();
-			noteList = NoteDB.getList();
+	public void deleteItem(int position) {
+		deleteNoteAndUpdate(position);
+	}
 
-			adapter.resetDataSet(noteList);
-			adapter.notifyDataSetChanged();
-	    }
+	private void deleteNoteAndUpdate(int position) {
+		NoteDB.loadNotes();
+		NoteDB.deleteNote(position);
+		NoteDB.saveNotes();
+		noteList = NoteDB.getList();
+
+		adapter.resetDataSet(noteList);
+		adapter.notifyDataSetChanged();
 	}
 	
 	@Override
@@ -195,6 +178,4 @@ public class NoteHubActivity extends ListActivity implements OnDismissCallback {
 		this.inputSearch.setVisibility(View.GONE);
 		super.onBackPressed();
 	}
-
-
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.view.View;
 import android.view.Window;
@@ -74,9 +73,6 @@ public class EditNote extends Activity {
     }
     
     private void initListeners() {
-		ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
-		noteText.setOnTouchListener(activitySwipeDetector);
-		
     	this.saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				returnAndSave();

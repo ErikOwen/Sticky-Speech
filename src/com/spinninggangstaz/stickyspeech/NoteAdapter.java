@@ -2,12 +2,12 @@ package com.spinninggangstaz.stickyspeech;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
@@ -110,7 +110,7 @@ public class NoteAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<No
 
 				// perform your search here using the searchConstraint String.
 
-				String prefix = constraint.toString().toLowerCase();
+				String prefix = constraint.toString().toLowerCase(Locale.getDefault());
 
 				if(prefix == null || prefix.length() == 0) {
 					ArrayList<Note> list = new ArrayList<Note>(origItems);
@@ -121,8 +121,8 @@ public class NoteAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<No
 					ArrayList<Note> nList = new ArrayList<Note>();
 
 					for(Note note : origItems) {
-						if(note.getTitle().toLowerCase().contains(prefix) ||
-								note.getText().toLowerCase().contains(prefix)) {
+						if(note.getTitle().toLowerCase(Locale.getDefault()).contains(prefix) ||
+								note.getText().toLowerCase(Locale.getDefault()).contains(prefix)) {
 							nList.add(note);
 						}
 					}

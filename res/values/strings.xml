@@ -17,6 +17,7 @@
     <string name="myNotes">My Notes</string>
     <string name="editNoteTitle">Edit Note</string>
     <string name="noNoteMessage">You don\'t have any notes.</string>
-    <string name="searchStickiesHint">Search Stickies...</string>
-
+    <string name="searchStickiesHint">Search Stickies…</string>
+	<string name="itemdeleted">Deleted</string>
+	<string name="taptoundo">Undo</string>
 </resources>
