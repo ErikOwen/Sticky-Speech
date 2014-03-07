@@ -112,6 +112,8 @@ public class NoteHubActivity extends ListActivity implements DeleteItemCallback
 		});
 		this.newNoteButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
+				InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 				goToNewNote();
 			}
 		});

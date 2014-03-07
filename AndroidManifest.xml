@@ -26,17 +26,21 @@
         <uses-library android:name="android.test.runner" />
         
         <activity
-            android:name="com.spinninggangstaz.stickyspeech.TakeNote" />
+            android:name="com.spinninggangstaz.stickyspeech.TakeNote"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".NoteHubActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditNote" android:label="EditNote"/>
+        <activity
+            android:name=".EditNote" android:label="EditNote"
+            android:windowSoftInputMode="stateVisible"/>
     </application>
 
 </manifest>

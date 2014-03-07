@@ -2,6 +2,7 @@ package com.spinninggangstaz.stickyspeech;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,6 +11,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ public class EditNote extends Activity {
 		if(savedInstanceState != null) {
 			this.noteText.setText(savedInstanceState.getString(EditNote.savedText));
 		}
+		
     }
     
 	@Override
@@ -117,6 +120,9 @@ public class EditNote extends Activity {
 			NoteDB.editNoteTitle(noteIndex, desiredTitle);
 		}
 		NoteDB.saveNotes();
+		
+		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		
 		Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
 		setResult(1, returnToNoteHubActivity);
