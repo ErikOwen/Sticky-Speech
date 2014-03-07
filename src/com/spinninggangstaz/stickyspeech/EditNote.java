@@ -119,10 +119,11 @@ public class EditNote extends Activity {
 		if(desiredTitle != null) {
 			NoteDB.editNoteTitle(noteIndex, desiredTitle);
 		}
+		
 		NoteDB.saveNotes();
 		
-		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+		InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		mgr.hideSoftInputFromWindow(this.saveButton.getWindowToken(), 0);
 		
 		Intent returnToNoteHubActivity = new Intent(EditNote.this, NoteHubActivity.class);
 		setResult(1, returnToNoteHubActivity);

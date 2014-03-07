@@ -25,6 +25,7 @@ import com.nhaarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.contextualundo.ContextualUndoAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.contextualundo.ContextualUndoAdapter.DeleteItemCallback;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
 
 /**
@@ -54,11 +55,14 @@ public class NoteHubActivity extends ListActivity implements DeleteItemCallback
 		noteList = NoteDB.getList();
 		
 		adapter = new NoteAdapter(this, android.R.layout.simple_list_item_1, noteList);
+		
 	    ContextualUndoAdapter contextualUndoAdapter = new ContextualUndoAdapter(adapter,
 	    		R.layout.undo_row, R.id.undo_row_undobutton, this);
+	    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(contextualUndoAdapter);
 	    
+	    swingBottomInAnimationAdapter.setAbsListView(getListView());
 	    contextualUndoAdapter.setAbsListView(getListView());
-	    list.setAdapter(contextualUndoAdapter);
+	    list.setAdapter(swingBottomInAnimationAdapter);
 	}
 
 	private void initLayout() {
@@ -138,6 +142,8 @@ public class NoteHubActivity extends ListActivity implements DeleteItemCallback
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		findViewById(R.id.noteHubRoot).requestFocus();
+		this.inputSearch.clearFocus();
 		if (requestCode == 1 && resultCode == 1) {
 			noteList = NoteDB.getList();
 			adapter.resetDataSet(noteList);
