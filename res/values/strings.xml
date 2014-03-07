@@ -18,6 +18,6 @@
     <string name="editNoteTitle">Edit Note</string>
     <string name="noNoteMessage">You don\'t have any notes.</string>
     <string name="searchStickiesHint">Search Stickies…</string>
-	<string name="itemdeleted">Deleted</string>
-	<string name="taptoundo">Undo</string>
+	<string name="itemdeleted">Swipe to Confirm Delete</string>
+	<string name="taptoundo">Click Here to Undo</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#33333333"
+    android:background="@color/black"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingRight="8dp" >
@@ -11,30 +11,32 @@
     <TextView
         android:id="@+id/undo_row_texttv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:padding="10dp"
         android:text="@string/itemdeleted"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textColor="@color/red"
+        android:textSize="15sp" />
 
     <View
         android:layout_width="1px"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="#ffffff"
-        tools:ignore="PxUsage" />
+		android:gravity="center"
+        android:background="@color/white" />
 
     <Button
         android:id="@+id/undo_row_undobutton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+		android:gravity="center"
         android:background="@null"
         android:padding="10dp"
         android:paddingRight="8dp"
         android:text="@string/taptoundo"
-        android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 </LinearLayout>
