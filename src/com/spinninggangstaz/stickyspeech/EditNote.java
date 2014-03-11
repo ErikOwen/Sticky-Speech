@@ -62,7 +62,7 @@ public class EditNote extends Activity {
      */
     private void initLayout() {
     	setContentView(R.layout.edit_note);
-    	this.saveButton = (Button)findViewById(R.id.backButton);
+    	this.saveButton = (Button)findViewById(R.id.editSaveButton);
     	this.newTitleButton = (Button)findViewById(R.id.titleButton);
         this.noteText = (LinedEditText)findViewById(R.id.editText);
         this.title = (TextView)findViewById(R.id.editNote);

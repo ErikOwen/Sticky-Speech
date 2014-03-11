@@ -24,7 +24,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/sticky_icon_large_white" />
+                android:src="@drawable/sticky_icon_large" />
         </RelativeLayout>
 
         <TextView

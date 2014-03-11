@@ -22,11 +22,11 @@
             android:layout_weight=".2" >
 
             <Button
-                android:id="@+id/backButton"
+                android:id="@+id/editSaveButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/back_arrow_selector" />
+                android:background="@drawable/save_icon_selector" />
         </RelativeLayout>
 
         <TextView
